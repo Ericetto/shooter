@@ -1,5 +1,5 @@
-﻿using Code.Infrastructure.Services.AssetProvider;
-using UnityEngine;
+﻿using UnityEngine;
+using Code.Infrastructure.Services.AssetProvider;
 
 namespace Code.Infrastructure.StaticData
 {
@@ -8,6 +8,7 @@ namespace Code.Infrastructure.StaticData
     {
         public int Id;
         public int Damage;
+        public bool IsPistol;
         public GameObject Prefab;
         public string PrefabPath => AssetPath.WeaponFolder + Prefab.name;
     }
