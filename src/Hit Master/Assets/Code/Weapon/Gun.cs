@@ -1,40 +1,44 @@
 using UnityEngine;
+using System.Collections;
+using Code.Infrastructure.Pooling;
+using Code.Infrastructure.StaticData;
 
 namespace Code.Weapon
 {
-    public class Gun : MonoBehaviour
+    public class Gun : WeaponBase
     {
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private Transform _startBulletTransform;
-
-        private void Start()
+        [SerializeField] private float _bulletRecycleTime = 3f;
+        
+        private PoolContainer _bulletPool;
+        private WaitForSeconds _bulletRecycleWait;
+        
+        public void Construct(WeaponData data, PoolContainer bulletPool)
         {
-            SetActivePhysics(false);
+            base.Construct(data);
+
+            _bulletPool = bulletPool;
+            _bulletRecycleWait = new WaitForSeconds(_bulletRecycleTime);
         }
+
+        public override void Attack() => Shoot();
 
         public void Shoot()
         {
-            var bullet = Instantiate(
-                _bulletPrefab,
-                _startBulletTransform.position,
-                _startBulletTransform.rotation);
+            PoolObject bullet = _bulletPool.Get();
 
-            Destroy(bullet.gameObject, 3f);
+            bullet.transform.SetParent(null);
+            bullet.transform.position = _startBulletTransform.position;
+            bullet.transform.rotation = _startBulletTransform.rotation;
+            bullet.SetActive(true);
+
+            StartCoroutine(RecycleBullet(bullet));
         }
 
-        public void SetActivePhysics(bool value)
+        private IEnumerator RecycleBullet(PoolObject bullet)
         {
-            _rigidbody.useGravity = value;
-            _rigidbody.isKinematic = !value;
-
-            GetComponent<Collider>().enabled = value;
-        }
-
-        public void AddForce(Vector3 force)
-        {
-            _rigidbody.AddForce(force, ForceMode.Acceleration);
-            _rigidbody.AddTorque(new Vector3(0, 0, 300));
+            yield return _bulletRecycleWait;
+            bullet.Recycle();
         }
     }
 }

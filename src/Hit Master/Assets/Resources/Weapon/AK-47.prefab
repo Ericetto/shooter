@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1003696971596722619}
   - component: {fileID: 4197920580032757278}
-  - component: {fileID: 2136665343751850708}
+  - component: {fileID: 8992821290396739145}
   - component: {fileID: 3659548359801757951}
-  - component: {fileID: 125779937227029604}
+  - component: {fileID: 1770272123864360183}
   - component: {fileID: 749673892765899438}
   m_Layer: 0
-  m_Name: Gun
+  m_Name: AK-47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 479081128261069569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4506698712870947274}
   - {fileID: 749673892159705244}
@@ -44,8 +44,8 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479081128261069569}
-  m_Mesh: {fileID: -3837773480853873440, guid: e76803eb8a4586f4f89f0b6ce217856a, type: 3}
---- !u!23 &2136665343751850708
+  m_Mesh: {fileID: 2052832554808805609, guid: 3964bf501fd6957418a826ca64eb15a6, type: 3}
+--- !u!23 &8992821290396739145
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,7 +102,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!64 &125779937227029604
+--- !u!64 &1770272123864360183
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,11 +111,11 @@ MeshCollider:
   m_GameObject: {fileID: 479081128261069569}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -3837773480853873440, guid: e76803eb8a4586f4f89f0b6ce217856a, type: 3}
+  m_Mesh: {fileID: 2052832554808805609, guid: 3964bf501fd6957418a826ca64eb15a6, type: 3}
 --- !u!114 &749673892765899438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,10 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d98d0e08c16af41967f557be9f61fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletPrefab: {fileID: 602401912520817776, guid: 27dffb6f52f28bf45ac977ee1b34afda,
-    type: 3}
-  _startBulletTransform: {fileID: 4506698712870947274}
   _rigidbody: {fileID: 3659548359801757951}
+  _startBulletTransform: {fileID: 4506698712870947274}
+  _bulletRecycleTime: 3
 --- !u!1 &3873326811204178800
 GameObject:
   m_ObjectHideFlags: 0
@@ -156,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3873326811204178800}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10.4, z: 75}
+  m_LocalPosition: {x: 0, y: 8.8, z: 75}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 1003696971596722619}

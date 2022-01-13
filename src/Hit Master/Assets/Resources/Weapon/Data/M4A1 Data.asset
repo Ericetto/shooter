@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54647b88edaaf67418df606e024e648e, type: 3}
+  m_Name: M4A1 Data
+  m_EditorClassIdentifier: 
+  Id: 1
+  Damage: 10
+  Prefab: {fileID: 479081128261069569, guid: 8cef21d4d64ab9445828ba0776046180, type: 3}

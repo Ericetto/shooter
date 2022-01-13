@@ -16,7 +16,7 @@ namespace Code.Human
         {
             DisablePhysics();
 
-            foreach (var bodyPart in _bodyParts)
+            foreach (HumanBodyPart bodyPart in _bodyParts)
                 bodyPart.Damaged += _health.TakeDamage;
         }
 
@@ -25,19 +25,19 @@ namespace Code.Human
 
         public void AddForce(Vector3 force, ForceMode forceMode = ForceMode.Impulse)
         {
-            foreach (var bodyPart in _bodyParts)
+            foreach (HumanBodyPart bodyPart in _bodyParts)
                 bodyPart.Rigidbody.AddForce(force, forceMode);
         }
 
         public void AddExplosionForce(float force, Vector3 explosionPosition, float radius)
         {
-            foreach (var bodyPart in _bodyParts)
+            foreach (HumanBodyPart bodyPart in _bodyParts)
                 bodyPart.Rigidbody.AddExplosionForce(force, explosionPosition, radius);
         }
 
         private void SetActivePhysics(bool value)
         {
-            foreach (var bodyPart in _bodyParts)
+            foreach (HumanBodyPart bodyPart in _bodyParts)
             {
                 bodyPart.Rigidbody.useGravity = value;
                 bodyPart.Rigidbody.isKinematic = !value;
@@ -48,7 +48,7 @@ namespace Code.Human
 
         private void OnDestroy()
         {
-            foreach (var bodyPart in _bodyParts)
+            foreach (HumanBodyPart bodyPart in _bodyParts)
                 bodyPart.Damaged -= _health.TakeDamage;
         }
 
@@ -64,7 +64,7 @@ namespace Code.Human
 
             for (var i = 0; i < boneRigidbodies.Length; i++)
             {
-                var bodyPart = boneRigidbodies[i].gameObject.GetComponent<HumanBodyPart>();
+                HumanBodyPart bodyPart = boneRigidbodies[i].gameObject.GetComponent<HumanBodyPart>();
 
                 if (bodyPart == null)
                     bodyPart = boneRigidbodies[i].gameObject.AddComponent<HumanBodyPart>();

@@ -1,9 +1,10 @@
-﻿using Code.Infrastructure.Factory;
+﻿using UnityEngine;
+using Code.Infrastructure.Factory;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.Services.Random;
-using UnityEngine;
+using Code.Infrastructure.StaticData;
 
 namespace Code.Infrastructure.StateMachine.States
 {
@@ -45,17 +46,27 @@ namespace Code.Infrastructure.StateMachine.States
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IInputService>(GetInputService());
+            _services.RegisterSingle<IStaticDataService>(GetStaticDataService());
 
             _services.RegisterSingle<IGameFactory>(new GameFactory(
-                _services.Single<IAssetProvider>()));
+                _services.Single<IAssetProvider>(),
+                _services.Single<IStaticDataService>(),
+                _services.Single<IRandomService>()));
+        }
+
+        private IStaticDataService GetStaticDataService()
+        {
+            IStaticDataService staticData = new StaticDataService();
+            staticData.Load();
+            return staticData;
         }
 
         private static IInputService GetInputService()
         {
             if (Application.isEditor)
                 return new StandaloneInputService();
-            else
-                return new MobileInputService();
+            
+            return new MobileInputService();
         }
     }
 }

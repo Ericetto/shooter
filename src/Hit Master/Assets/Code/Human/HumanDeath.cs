@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using Code.Weapon;
 
 namespace Code.Human
 {
@@ -8,9 +7,8 @@ namespace Code.Human
     public class HumanDeath : MonoBehaviour
     {
         [SerializeField] private HumanAnimator _animator;
-        [SerializeField] private MonoBehaviour _attack;
         [SerializeField] private HumanBody _body;
-        [SerializeField] private Gun _gun;
+        [SerializeField] private HumanAttack _attack;
         [SerializeField] private HumanHealth _health;
 
         public event Action Happened;
@@ -29,20 +27,14 @@ namespace Code.Human
         {
             _health.HealthChanged -= OnHealthChanged;
 
+            _attack.DropWeapon();
             _attack.enabled = false;
             _animator.enabled = false;
 
+
             _body.EnablePhysics();
 
-            DropWeapon();
-
             Happened?.Invoke();
-        }
-
-        protected void DropWeapon()
-        {
-            _gun.SetActivePhysics(true);
-            _gun.AddForce(new Vector3(0, 100, 0));
         }
     }
 }

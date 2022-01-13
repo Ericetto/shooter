@@ -2,8 +2,8 @@
 {
     public static class AssetPath
     {
-        public const string UIRootPath = "UI/UIRoot";
-        public const string EnemyPath = "Enemy";
-        public const string BulletPath = "Bullet";
+        public const string WeaponDataFolder = "Weapon/Data/";
+        public const string WeaponFolder = "Weapon/";
+        public const string Bullet = "Weapon/Bullet";
     }
 }

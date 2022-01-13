@@ -4991,7 +4991,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f010cd503e4531941a0860a5bffb3c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 30
+  _collider: {fileID: 2657352575891272147}
+  _startSpeed: 30
   _damage: 10
   _bloodHitFx: {fileID: 2225670219471210487}
   _environmentHitFx: {fileID: 7441716482153041040}

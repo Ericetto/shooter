@@ -1,14 +1,24 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Code.Human;
 
 namespace Code.Weapon
 {
     public class Bullet : MonoBehaviour
     {
-        [SerializeField] private float _speed;
+        [SerializeField] private Collider _collider;
+        [SerializeField] private float _startSpeed;
         [SerializeField] private float _damage;
         [SerializeField] private ParticleSystem _bloodHitFx;
         [SerializeField] private ParticleSystem _environmentHitFx;
+
+        private float _speed;
+
+        private void OnEnable()
+        {
+            _collider.enabled = true;
+            _speed = _startSpeed;
+        }
 
         private void Update()
         {
@@ -22,7 +32,7 @@ namespace Code.Weapon
                 humanBodyPart.TakeDamage(_damage);
 
                 humanBodyPart.Rigidbody.AddForce(
-                    transform.forward * _speed * 50,
+                    transform.forward * _startSpeed * 50,
                     ForceMode.Acceleration);
 
                 transform.SetParent(humanBodyPart.transform);
@@ -34,13 +44,14 @@ namespace Code.Weapon
                 if (other.TryGetComponent(out Rigidbody otherRigidbody))
                 {
                     otherRigidbody.AddForce(
-                        transform.forward * _speed * 50,
+                        transform.forward * _startSpeed * 50,
                         ForceMode.Acceleration);
                 }
 
                 _environmentHitFx.Play();
             }
 
+            _collider.enabled = false;
             _speed = 0;
         }
     }

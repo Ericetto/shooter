@@ -2,9 +2,7 @@
 {
     public class UnityRandomService : IRandomService
     {
-        public int Next(int min, int max)
-        {
-            return UnityEngine.Random.Range(min, max);
-        }
+        public int Next(int minInclusive, int maxInclusive) => 
+            UnityEngine.Random.Range(minInclusive, maxInclusive + 1);
     }
 }

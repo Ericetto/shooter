@@ -1,28 +1,36 @@
 ﻿using UnityEngine;
-using Code.Infrastructure.Services;
 using Code.Infrastructure.Services.Input;
 using Code.Logic.AnimatorState;
+using Code.Weapon;
 
 namespace Code.Human.Hero
 {
     public class HeroShooting : HumanAttack
     {
-        [SerializeField] private LayerMask _castLayerMask;
+        [SerializeField] private LayerMask _inputCastLayerMask;
 
-        private Camera _camera;
+        private const float RaycastDistance = 300;
 
         private IInputService _inputService;
+        private Camera _camera;
+        private Gun _gun;
 
         private bool _gunCanShoot;
-        
-        private void Start()
+
+        public void Construct(IInputService inputService, Gun gun)
         {
             _camera = Camera.main;
-            _inputService = AllServices.Container.Single<IInputService>();
+            _inputService = inputService;
+            _gun = gun;
+
+            EquipWeapon(gun);
         }
 
         private void Update()
         {
+            if (_inputService == null)
+                return;
+
             if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
                 Shoot();
         }
@@ -45,23 +53,21 @@ namespace Code.Human.Hero
 
         private void RotateGunToTarget()
         {
-            var ray = _camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            Vector3 targetPoint;
+            Vector3 targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
+                hitInfo.point : ray.GetPoint(RaycastDistance);
 
-            if (Physics.Raycast(ray, out var hitInfo, 300, _castLayerMask))
-                targetPoint = hitInfo.point;
-            else
-                targetPoint = ray.GetPoint(300);
-
-            var shootDirection = targetPoint - _gun.transform.position;
+            Vector3 shootDirection = targetPoint - _gun.transform.position;
             shootDirection.Normalize();
 
             _gun.transform.forward = shootDirection;
         }
 
-        // Call from Gun Shooting animation clip
-        protected override void GunShoot()
+        private bool Raycast(Ray ray, out RaycastHit hitInfo) =>
+            Physics.Raycast(ray, out hitInfo, RaycastDistance, _inputCastLayerMask);
+        
+        protected override void WeaponAttackByAnimation()
         {
             if (!_gunCanShoot)
                 return;

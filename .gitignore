@@ -10,6 +10,7 @@ src/Hit Master/[Bb]uilds/
 src/Hit Master/[Ll]ogs/
 src/Hit Master/[Mm]emoryCaptures/
 src/Hit Master/[Rr]ecordings/
+src/Hit Master/[Uu]serSettings
 
 #!/[Aa]ssets/**/*.meta
 

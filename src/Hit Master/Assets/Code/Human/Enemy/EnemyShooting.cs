@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Code.Human.Hero;
+using Code.Weapon;
 
 namespace Code.Human.Enemy
 {
@@ -9,18 +9,13 @@ namespace Code.Human.Enemy
     {
         [SerializeField] private float _attackCooldown = 3f;
         private float _currentAttackCooldown;
-
+        
         private Transform _heroTransform;
         private bool _isAttacking;
 
-        private void Awake()
+        public void Construct(Gun gun, Transform heroTransform)
         {
-            Construct(FindObjectOfType<HeroShooting>().transform);
-            Enable();
-        }
-
-        public void Construct(Transform heroTransform)
-        {
+            base.EquipWeapon(gun);
             _heroTransform = heroTransform;
         }
 
@@ -58,11 +53,11 @@ namespace Code.Human.Enemy
 
         private IEnumerator GunShooting()
         {
-            var wait = new WaitForSeconds(0.25f);
+            WaitForSeconds wait = new WaitForSeconds(0.25f);
 
-            for (var i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                _gun.Shoot();
+                _weapon.Attack();
                 yield return wait;
             }
 

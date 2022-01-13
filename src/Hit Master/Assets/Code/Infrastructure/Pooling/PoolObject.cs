@@ -6,27 +6,19 @@ namespace Code.Infrastructure.Pooling
     {
         public PoolContainer Pool { get; private set; }
 
-        public Transform CachedTransform { get; private set; }
-
-        private void Awake()
-        {
-            CachedTransform = transform;
-        }
-
-        public void SetPool(PoolContainer pool)
-        {
-            Pool = pool;
-        }
+        public void SetPool(PoolContainer pool) => Pool = pool;
 
         public void Recycle()
         {
-            if (Pool != null)
-                Pool.Recycle(this);
+            if (Pool == null)
+                return;
+
+            Pool.Recycle(this);
+            OnRecycle();
         }
 
-        public void SetActive(bool state)
-        {
-            gameObject.SetActive(state);
-        }
+        protected virtual void OnRecycle() { }
+
+        public void SetActive(bool state) => gameObject.SetActive(state);
     }
 }

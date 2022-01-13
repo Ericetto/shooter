@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Code.Infrastructure.Factory;
 using Code.Infrastructure.Services;
+using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.StateMachine.States;
 using Code.Logic;
 
@@ -19,9 +20,17 @@ namespace Code.Infrastructure.StateMachine
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>()),
-                [typeof(GameLoopState)] = new GameLoopState(this),
+                [typeof(BootstrapState)] = new BootstrapState(this,
+                    sceneLoader,
+                    services),
+
+                [typeof(LoadLevelState)] = new LoadLevelState(this,
+                    sceneLoader,
+                    loadingCurtain,
+                    services.Single<IGameFactory>(),
+                    services.Single<IInputService>()),
+
+                [typeof(GameLoopState)] = new GameLoopState(this)
             };
         }
 
