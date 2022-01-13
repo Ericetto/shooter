@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections;
 using Code.Infrastructure.Services.Input;
-using Code.Logic.AnimatorState;
-using Code.Weapon;
 
 namespace Code.Human.Hero
 {
-    public class HeroShooting : HumanAttack
+    public class HeroShooting : HumanShooting
     {
         [SerializeField] private LayerMask _inputCastLayerMask;
 
@@ -13,67 +12,49 @@ namespace Code.Human.Hero
 
         private IInputService _inputService;
         private Camera _camera;
-        private Gun _gun;
+        private Vector3 _targetPoint;
 
-        private bool _gunCanShoot;
-
-        public void Construct(IInputService inputService, Gun gun)
+        public void Construct(IInputService inputService)
         {
             _camera = Camera.main;
             _inputService = inputService;
-            _gun = gun;
-
-            EquipWeapon(gun);
         }
 
-        private void Update()
+        private IEnumerator Start()
         {
-            if (_inputService == null)
-                return;
+            while (_inputService == null)
+                yield return null;
 
-            if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
-                Shoot();
+            while (true)
+            {
+                if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
+                {
+                    while (_animator.IsInTransition)
+                        yield return null;
+
+                    SetTarget();
+                    Shoot();
+                }
+
+                yield return null;
+            }
         }
 
-        private void Shoot()
+        protected override void GunShootByAnimation()
         {
-            _animator.Shooting();
-
-            if (_animator.IsInTransition)
-                _animator.StateExited += UnlockGun;
+            Gun.transform.LookAt(_targetPoint);
+            Gun.Shoot();
         }
 
-        private void UnlockGun(AnimatorState _)
-        {
-            _animator.StateExited -= UnlockGun;
-            _gunCanShoot = true;
-        }
-
-        private void LockGun() => _gunCanShoot = false;
-
-        private void RotateGunToTarget()
+        private void SetTarget()
         {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            Vector3 targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
+            _targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
                 hitInfo.point : ray.GetPoint(RaycastDistance);
-
-            Vector3 shootDirection = targetPoint - _gun.transform.position;
-            shootDirection.Normalize();
-
-            _gun.transform.forward = shootDirection;
         }
 
         private bool Raycast(Ray ray, out RaycastHit hitInfo) =>
             Physics.Raycast(ray, out hitInfo, RaycastDistance, _inputCastLayerMask);
-        
-        protected override void WeaponAttackByAnimation()
-        {
-            if (!_gunCanShoot)
-                return;
-
-            RotateGunToTarget();
-            _gun.Shoot();
-        }
     }
 }

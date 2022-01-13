@@ -5,23 +5,28 @@ using Code.Infrastructure.StaticData;
 
 namespace Code.Weapon
 {
-    public class Gun : WeaponBase
+    public class Gun : MonoBehaviour
     {
+        [SerializeField] protected Rigidbody _rigidbody;
         [SerializeField] private Transform _startBulletTransform;
         [SerializeField] private float _bulletRecycleTime = 3f;
-        
+
+        public float Damage { get; private set; }
+        public bool IsPistol { get; private set; }
+
         private PoolContainer _bulletPool;
         private WaitForSeconds _bulletRecycleWait;
-        
+
+        private void Start() => SetActivePhysics(false);
+
         public void Construct(WeaponData data, PoolContainer bulletPool)
         {
-            base.Construct(data);
-
             _bulletPool = bulletPool;
             _bulletRecycleWait = new WaitForSeconds(_bulletRecycleTime);
-        }
 
-        public override void Attack() => Shoot();
+            Damage = data.Damage;
+            IsPistol = data.IsPistol;
+        }
 
         public void Shoot()
         {
@@ -39,6 +44,17 @@ namespace Code.Weapon
         {
             yield return _bulletRecycleWait;
             bullet.Recycle();
+        }
+        public void AddForce(Vector3 force)
+        {
+            _rigidbody.AddForce(force, ForceMode.Acceleration);
+            _rigidbody.AddTorque(force);
+        }
+
+        public void SetActivePhysics(bool value)
+        {
+            _rigidbody.useGravity = value;
+            _rigidbody.isKinematic = !value;
         }
     }
 }

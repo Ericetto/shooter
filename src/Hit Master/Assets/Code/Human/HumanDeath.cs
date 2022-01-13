@@ -8,12 +8,18 @@ namespace Code.Human
     {
         [SerializeField] private HumanAnimator _animator;
         [SerializeField] private HumanBody _body;
-        [SerializeField] private HumanAttack _attack;
+        [SerializeField] private HumanEquipment _equipment;
         [SerializeField] private HumanHealth _health;
+
+        private HumanShooting _shooting;
 
         public event Action Happened;
 
-        private void Start() => _health.HealthChanged += OnHealthChanged;
+        private void Start()
+        {
+            _shooting = GetComponent<HumanShooting>();
+            _health.HealthChanged += OnHealthChanged;
+        }
 
         private void OnDestroy() => _health.HealthChanged -= OnHealthChanged;
 
@@ -27,8 +33,8 @@ namespace Code.Human
         {
             _health.HealthChanged -= OnHealthChanged;
 
-            _attack.DropWeapon();
-            _attack.enabled = false;
+            _equipment.DropGun();
+            _shooting.enabled = false;
             _animator.enabled = false;
 
 

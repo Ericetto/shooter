@@ -479,6 +479,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7571643891322823018, guid: 74b143519c64fea479a4adba96d5f227,
         type: 3}
+      propertyPath: m_Name
+      value: Rifle Holder
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571643891322823018, guid: 74b143519c64fea479a4adba96d5f227,
+        type: 3}
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
@@ -822,6 +827,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7571643892222976355, guid: 74b143519c64fea479a4adba96d5f227,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7571643892295937296, guid: 74b143519c64fea479a4adba96d5f227,
         type: 3}
       propertyPath: m_Layer
@@ -897,12 +907,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169af540a7336c945ab9fb2346d008a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2645719039774721921 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7571643891322823013, guid: 74b143519c64fea479a4adba96d5f227,
+--- !u!114 &6864316202472521652 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1361892785721579856, guid: 74b143519c64fea479a4adba96d5f227,
     type: 3}
   m_PrefabInstance: {fileID: 5594765353236244196}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2645719038763452295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b2a478fd4170848914c2b8727f04d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1561770306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,8 +931,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7482fddc1389d4e8b6e0ada8644965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipment: {fileID: 6864316202472521652}
   _animator: {fileID: 2645719038763452344}
-  _weaponHolder: {fileID: 2645719039774721921}
   _inputCastLayerMask:
     serializedVersion: 2
     m_Bits: 1

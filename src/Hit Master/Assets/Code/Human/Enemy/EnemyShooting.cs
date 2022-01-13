@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Code.Weapon;
 
 namespace Code.Human.Enemy
 {
     [RequireComponent(typeof(HumanAnimator))]
-    public class EnemyShooting : HumanAttack
+    public class EnemyShooting : HumanShooting
     {
         [SerializeField] private float _attackCooldown = 3f;
         private float _currentAttackCooldown;
@@ -13,9 +12,8 @@ namespace Code.Human.Enemy
         private Transform _heroTransform;
         private bool _isAttacking;
 
-        public void Construct(Gun gun, Transform heroTransform)
+        public void Construct(Transform heroTransform)
         {
-            base.EquipWeapon(gun);
             _heroTransform = heroTransform;
         }
 
@@ -46,28 +44,28 @@ namespace Code.Human.Enemy
 
         private void StartShooting()
         {
-            _animator.Shooting();
+            
             StartCoroutine(GunShooting());
-            _isAttacking = true;
         }
 
         private IEnumerator GunShooting()
         {
+            _isAttacking = true;
+
             WaitForSeconds wait = new WaitForSeconds(0.25f);
 
-            for (int i = 0; i < 5; i++)
+            while (_animator.IsInTransition)
+                yield return wait;
+
+            int shootCount = Gun.IsPistol ? 1 : 5;
+
+            for (int i = 0; i < shootCount; i++)
             {
-                _weapon.Attack();
+                Shoot();
                 yield return wait;
             }
 
-            StopShooting();
-        }
-
-        private void StopShooting()
-        {
             _currentAttackCooldown = _attackCooldown;
-            //_animator.StopShooting();
             _isAttacking = false;
         }
     }

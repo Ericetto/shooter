@@ -60,20 +60,24 @@ namespace Code.Infrastructure.StateMachine.States
 
         private Transform InitHero(PoolContainer bulletPool)
         {
-            HeroShooting hero = Object.FindObjectOfType<HeroShooting>();
-            hero.Construct(_inputService, CreateHeroGun(bulletPool));
+            GameObject hero = GameObject.FindGameObjectWithTag(Tags.Player);
+            hero.GetComponent<HeroShooting>().Construct(_inputService);
+            hero.GetComponent<HumanEquipment>().EquipGun(CreateHeroGun(bulletPool));
             return hero.transform;
         }
 
         private void InitEnemies(PoolContainer bulletPool, Transform hero)
         {
-            EnemyShooting[] enemies = Object.FindObjectsOfType<EnemyShooting>();
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
 
-            foreach (EnemyShooting enemyShooting in enemies)
+            foreach (GameObject enemy in enemies)
             {
-                Gun gun = CreateRandomGun(bulletPool);
-                enemyShooting.Construct(gun, hero);
+                EnemyShooting enemyShooting = enemy.GetComponent<EnemyShooting>();
+                enemyShooting.Construct(hero);
                 enemyShooting.Enable();
+
+                Gun gun = CreateRandomGun(bulletPool);
+                enemy.GetComponent<HumanEquipment>().EquipGun(gun);
             }
         }
 

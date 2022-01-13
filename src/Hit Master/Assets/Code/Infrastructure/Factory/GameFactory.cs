@@ -21,7 +21,7 @@ namespace Code.Infrastructure.Factory
         }
 
         public Gun CreateRandomGun(PoolContainer bulletPool) => 
-            CreateGun(_random.Next(0, 1), bulletPool);
+            CreateGun(_random.Next(0, 3), bulletPool);
 
         public Gun CreateGun(int id, PoolContainer bulletPool)
         {

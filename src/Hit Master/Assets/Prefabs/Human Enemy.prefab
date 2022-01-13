@@ -187,10 +187,20 @@ PrefabInstance:
       propertyPath: _attack
       value: 
       objectReference: {fileID: 228666396}
+    - target: {fileID: 7571643892222976354, guid: 74b143519c64fea479a4adba96d5f227,
+        type: 3}
+      propertyPath: _shooting
+      value: 
+      objectReference: {fileID: 228666396}
     - target: {fileID: 7571643892222976355, guid: 74b143519c64fea479a4adba96d5f227,
         type: 3}
       propertyPath: m_Name
       value: Human Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571643892222976355, guid: 74b143519c64fea479a4adba96d5f227,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74b143519c64fea479a4adba96d5f227, type: 3}
@@ -212,12 +222,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 169af540a7336c945ab9fb2346d008a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &5816758039254872879 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7571643891322823013, guid: 74b143519c64fea479a4adba96d5f227,
+--- !u!114 &3120096082344315674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1361892785721579856, guid: 74b143519c64fea479a4adba96d5f227,
     type: 3}
   m_PrefabInstance: {fileID: 4155314608978170442}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816758038406001449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42b2a478fd4170848914c2b8727f04d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &228666396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0e69905fe8a22a4cbf7eb977a1ba69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _equipment: {fileID: 3120096082344315674}
   _animator: {fileID: 5816758038406001430}
-  _weaponHolder: {fileID: 5816758039254872879}
   _attackCooldown: 3
