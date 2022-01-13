@@ -1,88 +1,92 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Code.Infrastructure.Services.AssetProvider;
-using Code.Infrastructure.Services.Pooling;
-
-public class PoolContainer : IPoolContainer
-{
-    readonly Stack<PoolObject> _store = new Stack<PoolObject>(64);
-
-    private GameObject _prefab;
-
-    private readonly string _prefabPath;
-    private readonly IAssetProvider _assetProvider;
-
-    public PoolContainer(IAssetProvider assetProvider, string prefabPath)
-    {
-        _assetProvider = assetProvider;
-        _prefabPath = prefabPath;
-    }
-
-    private bool LoadPrefab()
-    {
-        _prefab = Resources.Load<GameObject>(_prefabPath);
-
-        if (_prefab == null)
-        {
-            Debug.LogWarning("Cant load asset " + _prefabPath);
-            return false;
-        }
 
 #if UNITY_EDITOR
-        if (_prefab.GetComponent<PoolObject>() != null)
-        {
-            Debug.LogWarning("PoolObject cant be used on prefabs");
-
-            _prefab = null;
-
-            UnityEditor.EditorApplication.isPaused = true;
-
-            return false;
-        }
+using UnityEditor;
 #endif
-        return true;
-    }
 
-    public PoolObject Get()
+namespace Code.Infrastructure.Pooling
+{
+    public class PoolContainer : IPoolContainer
     {
-        if (_prefab == null)
+        private readonly IAssetProvider _assetProvider;
+
+        private readonly string _prefabPath;
+        private readonly Stack<PoolObject> _store = new Stack<PoolObject>(64);
+
+        private GameObject _prefab;
+
+        public PoolContainer(IAssetProvider assetProvider, string prefabPath)
         {
-            if (!LoadPrefab())
-                return null;
+            _assetProvider = assetProvider;
+            _prefabPath = prefabPath;
         }
 
-        PoolObject obj;
-
-        if (_store.Count > 0)
+        public PoolObject Get()
         {
-            obj = _store.Pop();
-        }
-        else
-        {
-            GameObject go = _assetProvider.Instantiate(_prefabPath);
-            obj = go.AddComponent<PoolObject>();
-            obj.SetPool(this);
-        }
+            if (_prefab == null)
+                if (!LoadPrefab())
+                    return null;
 
-        obj.SetActive(false);
+            PoolObject obj;
 
-        return obj;
-    }
+            if (_store.Count > 0)
+            {
+                obj = _store.Pop();
+            }
+            else
+            {
+                var go = _assetProvider.Instantiate(_prefabPath);
+                obj = go.AddComponent<PoolObject>();
+                obj.SetPool(this);
+            }
 
-    public void Recycle(PoolObject obj)
-    {
-        if (obj != null && obj.Pool == this)
-        {
             obj.SetActive(false);
 
-            if (!_store.Contains(obj))
-                _store.Push(obj);
+            return obj;
         }
-        else
+
+        public void Recycle(PoolObject obj)
         {
+            if (obj != null && obj.Pool == this)
+            {
+                obj.SetActive(false);
+
+                if (!_store.Contains(obj))
+                    _store.Push(obj);
+            }
+            else
+            {
 #if UNITY_EDITOR
-            Debug.LogWarning("Invalid obj to recycle", obj);
+                Debug.LogWarning("Invalid obj to recycle", obj);
 #endif
+            }
+        }
+
+        private bool LoadPrefab()
+        {
+            _prefab = Resources.Load<GameObject>(_prefabPath);
+
+            if (_prefab == null)
+            {
+                Debug.LogWarning("Cant load asset " + _prefabPath);
+                return false;
+            }
+
+#if UNITY_EDITOR
+            if (_prefab.GetComponent<PoolObject>() != null)
+            {
+                Debug.LogWarning("PoolObject cant be used on prefabs");
+
+                _prefab = null;
+
+                EditorApplication.isPaused = true;
+
+                return false;
+            }
+#endif
+            return true;
         }
     }
 }

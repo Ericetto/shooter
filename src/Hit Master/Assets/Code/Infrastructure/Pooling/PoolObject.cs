@@ -1,20 +1,32 @@
 ﻿using UnityEngine;
 
-public class PoolObject : MonoBehaviour
+namespace Code.Infrastructure.Pooling
 {
-    public PoolContainer Pool { get; private set; }
-
-    public Transform CachedTransform { get; private set; }
-
-    private void Awake() => CachedTransform = transform;
-
-    public void SetPool(PoolContainer pool) => Pool = pool;
-
-    public void Recycle()
+    public class PoolObject : MonoBehaviour
     {
-        if (Pool != null)
-            Pool.Recycle(this);
-    }
+        public PoolContainer Pool { get; private set; }
 
-    public void SetActive(bool state) => gameObject.SetActive(state);
+        public Transform CachedTransform { get; private set; }
+
+        private void Awake()
+        {
+            CachedTransform = transform;
+        }
+
+        public void SetPool(PoolContainer pool)
+        {
+            Pool = pool;
+        }
+
+        public void Recycle()
+        {
+            if (Pool != null)
+                Pool.Recycle(this);
+        }
+
+        public void SetActive(bool state)
+        {
+            gameObject.SetActive(state);
+        }
+    }
 }

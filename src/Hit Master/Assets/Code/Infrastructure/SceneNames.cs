@@ -1,4 +1,4 @@
-﻿namespace Code
+﻿namespace Code.Infrastructure
 {
     public static class SceneNames
     {

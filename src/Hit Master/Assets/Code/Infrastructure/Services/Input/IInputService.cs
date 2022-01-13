@@ -2,6 +2,8 @@
 {
     public interface IInputService : IService
     {
-        
+        bool IsShootButton();
+        bool IsShootButtonUp();
+        bool IsShootButtonDown();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Code.Infrastructure.Services.Pooling
+﻿namespace Code.Infrastructure.Pooling
 {
     public interface IPoolContainer
     {

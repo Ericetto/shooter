@@ -1,6 +1,6 @@
 ﻿namespace Code.Infrastructure.Services.Random
 {
-    class UnityRandomService : IRandomService
+    public class UnityRandomService : IRandomService
     {
         public int Next(int min, int max)
         {
