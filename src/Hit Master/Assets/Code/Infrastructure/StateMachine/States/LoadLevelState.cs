@@ -3,7 +3,6 @@ using Code.Human.Enemy;
 using Code.Human.Hero;
 using Code.Infrastructure.Factory;
 using Code.Infrastructure.Pooling;
-using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Logic;
 using Code.Weapon;
@@ -17,19 +16,22 @@ namespace Code.Infrastructure.StateMachine.States
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly IInputService _inputService;
+        private readonly IPoolContainer _bulletPool;
 
         public LoadLevelState(
             GameStateMachine stateMachine,
             SceneLoader sceneLoader,
             LoadingCurtain curtain,
             IGameFactory gameFactory,
-            IInputService inputService)
+            IInputService inputService,
+            IPoolContainer bulletPool)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _inputService = inputService;
+            _bulletPool = bulletPool;
         }
 
         public void Enter(string sceneName)
@@ -51,22 +53,19 @@ namespace Code.Infrastructure.StateMachine.States
 
         private void InitGameWorld()
         {
-            PoolContainer bulletPool = CreateBulletPool();
-
-            Transform hero = InitHero(bulletPool);
-
-            InitEnemies(bulletPool, hero);
+            Transform hero = InitHero();
+            InitEnemies(hero);
         }
 
-        private Transform InitHero(PoolContainer bulletPool)
+        private Transform InitHero()
         {
             GameObject hero = GameObject.FindGameObjectWithTag(Tags.Player);
             hero.GetComponent<HeroShooting>().Construct(_inputService);
-            hero.GetComponent<HumanEquipment>().EquipGun(CreateHeroGun(bulletPool));
+            hero.GetComponent<HumanEquipment>().EquipGun(CreateHeroGun());
             return hero.transform;
         }
 
-        private void InitEnemies(PoolContainer bulletPool, Transform hero)
+        private void InitEnemies(Transform hero)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
 
@@ -76,18 +75,13 @@ namespace Code.Infrastructure.StateMachine.States
                 enemyShooting.Construct(hero);
                 enemyShooting.Enable();
 
-                Gun gun = CreateRandomGun(bulletPool);
+                Gun gun = CreateRandomGun();
                 enemy.GetComponent<HumanEquipment>().EquipGun(gun);
             }
         }
 
-        private PoolContainer CreateBulletPool() =>
-            _gameFactory.CreateBulletPool(AssetPath.Bullet);
+        private Gun CreateHeroGun() => CreateRandomGun();
 
-        private Gun CreateHeroGun(PoolContainer bulletPool) =>
-            CreateRandomGun(bulletPool);
-
-        private Gun CreateRandomGun(PoolContainer bulletPool) =>
-            _gameFactory.CreateRandomGun(bulletPool);
+        private Gun CreateRandomGun() => _gameFactory.CreateRandomGun(_bulletPool);
     }   
 }

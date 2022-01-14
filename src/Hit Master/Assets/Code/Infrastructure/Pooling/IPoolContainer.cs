@@ -1,6 +1,8 @@
-﻿namespace Code.Infrastructure.Pooling
+﻿using Code.Infrastructure.Services;
+
+namespace Code.Infrastructure.Pooling
 {
-    public interface IPoolContainer
+    public interface IPoolContainer : IService
     {
         PoolObject Get();
         void Recycle(PoolObject obj);

@@ -7,14 +7,19 @@ namespace Code.Infrastructure.Pooling
     public class PoolContainer : IPoolContainer
     {
         private readonly IAssetProvider _assetProvider;
-
         private readonly string _prefabPath;
-        private readonly Stack<PoolObject> _store = new Stack<PoolObject>(64);
+        private readonly Transform _objectsHolder;
+        private readonly Stack<PoolObject> _store;
 
-        public PoolContainer(IAssetProvider assetProvider, string prefabPath)
+        public PoolContainer(
+            IAssetProvider assetProvider,
+            string prefabPath,
+            Transform objectsHolder = null)
         {
             _assetProvider = assetProvider;
             _prefabPath = prefabPath;
+            _objectsHolder = objectsHolder;
+            _store = new Stack<PoolObject>(64);
         }
 
         public PoolObject Get()
@@ -42,6 +47,9 @@ namespace Code.Infrastructure.Pooling
             if (obj != null && obj.Pool == this)
             {
                 obj.SetActive(false);
+
+                if (_objectsHolder != null)
+                    obj.transform.SetParent(_objectsHolder);
 
                 if (!_store.Contains(obj))
                     _store.Push(obj);

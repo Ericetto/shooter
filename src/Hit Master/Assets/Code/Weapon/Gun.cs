@@ -14,12 +14,12 @@ namespace Code.Weapon
         public float Damage { get; private set; }
         public bool IsPistol { get; private set; }
 
-        private PoolContainer _bulletPool;
+        private IPoolContainer _bulletPool;
         private WaitForSeconds _bulletRecycleWait;
 
         private void Start() => SetActivePhysics(false);
 
-        public void Construct(WeaponData data, PoolContainer bulletPool)
+        public void Construct(WeaponData data, IPoolContainer bulletPool)
         {
             _bulletPool = bulletPool;
             _bulletRecycleWait = new WaitForSeconds(_bulletRecycleTime);
@@ -31,8 +31,7 @@ namespace Code.Weapon
         public void Shoot()
         {
             PoolObject bullet = _bulletPool.Get();
-
-            bullet.transform.SetParent(null);
+            
             bullet.transform.position = _startBulletTransform.position;
             bullet.transform.rotation = _startBulletTransform.rotation;
             bullet.SetActive(true);

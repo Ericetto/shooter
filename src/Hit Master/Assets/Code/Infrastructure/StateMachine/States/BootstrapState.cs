@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Code.Infrastructure.Factory;
+using Code.Infrastructure.Pooling;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
@@ -28,13 +29,10 @@ namespace Code.Infrastructure.StateMachine.States
 
         public void Enter()
         {
-            _sceneLoader.Load(SceneNames.Init, onLoaded: EnterLoadLevel);
+            _sceneLoader.Load(SceneNames.Init, EnterLoadLevel);
         }
 
-        public void Exit()
-        {
-
-        }
+        public void Exit() { }
 
         private void EnterLoadLevel()
         {
@@ -43,25 +41,42 @@ namespace Code.Infrastructure.StateMachine.States
 
         private void RegisterServices()
         {
+            _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
-            _services.RegisterSingle<IInputService>(GetInputService());
-            _services.RegisterSingle<IStaticDataService>(GetStaticDataService());
-
-            _services.RegisterSingle<IGameFactory>(new GameFactory(
-                _services.Single<IAssetProvider>(),
-                _services.Single<IStaticDataService>(),
-                _services.Single<IRandomService>()));
+            _services.RegisterSingle<IInputService>(CreateInputService());
+            _services.RegisterSingle<IStaticDataService>(CreateStaticDataService());
+            _services.RegisterSingle<IPoolContainer>(CreateBulletPool());
+            _services.RegisterSingle<IGameFactory>(CreateGameFactory());
         }
 
-        private IStaticDataService GetStaticDataService()
+        private IGameFactory CreateGameFactory()
+        {
+            return new GameFactory(
+                _services.Single<IAssetProvider>(),
+                _services.Single<IStaticDataService>(),
+                _services.Single<IRandomService>());
+        }
+
+        private IPoolContainer CreateBulletPool()
+        {
+            GameObject bulletPoolHolder = new GameObject("Bullet Holder");
+            Object.DontDestroyOnLoad(bulletPoolHolder);
+
+            return new PoolContainer(
+                _services.Single<IAssetProvider>(),
+                AssetPath.Bullet,
+                bulletPoolHolder.transform);
+        }
+
+        private IStaticDataService CreateStaticDataService()
         {
             IStaticDataService staticData = new StaticDataService();
             staticData.Load();
             return staticData;
         }
 
-        private static IInputService GetInputService()
+        private static IInputService CreateInputService()
         {
             if (Application.isEditor)
                 return new StandaloneInputService();

@@ -20,10 +20,10 @@ namespace Code.Infrastructure.Factory
             _random = random;
         }
 
-        public Gun CreateRandomGun(PoolContainer bulletPool) => 
+        public Gun CreateRandomGun(IPoolContainer bulletPool) => 
             CreateGun(_random.Next(0, 3), bulletPool);
 
-        public Gun CreateGun(int id, PoolContainer bulletPool)
+        public Gun CreateGun(int id, IPoolContainer bulletPool)
         {
             WeaponData weaponData = _staticData.ForWeapon(id);
 
@@ -35,7 +35,7 @@ namespace Code.Infrastructure.Factory
             return gun;
         }
 
-        public PoolContainer CreateBulletPool(string assetPath) => 
+        public PoolContainer CreatePool(string assetPath) =>
             new PoolContainer(_assetProvider, assetPath);
     }
 }

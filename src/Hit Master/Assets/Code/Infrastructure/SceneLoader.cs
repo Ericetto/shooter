@@ -2,10 +2,11 @@
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
+using Code.Infrastructure.Services;
 
 namespace Code.Infrastructure
 {
-    public class SceneLoader
+    public class SceneLoader : IService
     {
         private readonly ICoroutineRunner _coroutineRunner;
 
@@ -22,12 +23,6 @@ namespace Code.Infrastructure
 
         private IEnumerator LoadScene(string nextScene, Action onLoaded = null)
         {
-            if (SceneManager.GetActiveScene().name == nextScene)
-            {
-                onLoaded?.Invoke();
-                yield break;
-            }
-
             AsyncOperation waitNextScene = SceneManager.LoadSceneAsync(nextScene);
 
             while (!waitNextScene.isDone)

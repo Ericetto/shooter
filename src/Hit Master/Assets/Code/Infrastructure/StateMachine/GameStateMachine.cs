@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Code.Infrastructure.Factory;
+using Code.Infrastructure.Pooling;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.StateMachine.States;
@@ -8,7 +9,7 @@ using Code.Logic;
 
 namespace Code.Infrastructure.StateMachine
 {
-    public class GameStateMachine
+    public class GameStateMachine : IGameStateMachine
     {
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _activeState;
@@ -28,7 +29,8 @@ namespace Code.Infrastructure.StateMachine
                     sceneLoader,
                     loadingCurtain,
                     services.Single<IGameFactory>(),
-                    services.Single<IInputService>()),
+                    services.Single<IInputService>(),
+                    services.Single<IPoolContainer>()),
 
                 [typeof(GameLoopState)] = new GameLoopState(this)
             };

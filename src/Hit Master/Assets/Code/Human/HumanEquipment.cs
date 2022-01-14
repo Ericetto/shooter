@@ -26,6 +26,6 @@ public class HumanEquipment : MonoBehaviour
         Gun.transform.SetParent(null);
         Gun.GetComponent<Collider>().enabled = true;
         Gun.SetActivePhysics(true);
-        Gun.AddForce(new Vector3(0, 500, 0));
+        Gun.AddForce(new Vector3(0, 350, 0));
     }
 }
