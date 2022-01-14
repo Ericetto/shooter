@@ -55,12 +55,14 @@ namespace Code.Human
         
         public void Run() => _animator.SetBool(_runBoolParameterHash, true);
         public void Stop() => _animator.SetBool(_runBoolParameterHash, false);
+        
+        public void StartShooting() => _animator.SetBool(_shootingBoolParameterHash, true);
 
         public void Shoot()
         {
             if (State != AnimatorState.Shooting)
             {
-                _animator.SetBool(_shootingBoolParameterHash, true);
+                StartShooting();
             }
             else if (_canPlayShooting)
             {

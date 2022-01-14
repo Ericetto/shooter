@@ -44,13 +44,14 @@ namespace Code.Human.Enemy
 
         private void StartShooting()
         {
-            
             StartCoroutine(GunShooting());
         }
 
         private IEnumerator GunShooting()
         {
             _isAttacking = true;
+
+            _animator.StartShooting();
 
             WaitForSeconds wait = new WaitForSeconds(0.25f);
 

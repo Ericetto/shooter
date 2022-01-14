@@ -40,7 +40,7 @@ namespace Code.Human.Hero
             }
         }
 
-        protected override void GunShootByAnimation()
+        protected override void GunShoot()
         {
             Gun.transform.LookAt(_targetPoint);
             Gun.Shoot();
