@@ -8,6 +8,8 @@ namespace Code.Infrastructure.StaticData
     {
         public int Id;
         public int Damage;
+        public bool IsAutomatic;
+        public float FireRate;
         public bool IsPistol;
         public GameObject Prefab;
         public string PrefabPath => AssetPath.WeaponFolder + Prefab.name;

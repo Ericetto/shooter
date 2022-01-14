@@ -6,8 +6,8 @@ namespace Code.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        PoolContainer CreatePool(string assetPath);
-        Gun CreateRandomGun(IPoolContainer bulletPool);
-        Gun CreateGun(int id, IPoolContainer bulletPool);
+        IPoolContainer CreatePool(string assetPath);
+        IGun CreateRandomGun(IPoolContainer bulletPool);
+        IGun CreateGun(int id, IPoolContainer bulletPool);
     }
 }

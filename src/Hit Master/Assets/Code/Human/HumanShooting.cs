@@ -1,36 +1,29 @@
 ﻿using UnityEngine;
-using Code.Logic.AnimatorState;
-using Code.Weapon;
 
 namespace Code.Human
 {
-    [RequireComponent(typeof(HumanAnimator))]
+    [RequireComponent(typeof(HumanAnimator), typeof(HumanEquipment))]
     public abstract class HumanShooting : MonoBehaviour
     {
-        [SerializeField] protected HumanEquipment _equipment;
         [SerializeField] protected HumanAnimator _animator;
+        [SerializeField] protected HumanEquipment _equipment;
         
-        protected Gun Gun => _equipment.Gun;
-
         protected bool _isActive;
 
         public void Enable() => _isActive = true;
         public void Disable() => _isActive = false;
-
-        protected virtual void Shoot()
-        {
-            if (_animator.State == AnimatorState.Shooting)
-                _animator.Shoot();
-            else
-                GunShoot();
-        }
         
-        protected virtual void GunShoot()
+        protected virtual void PullTrigger()
         {
-            if (!_animator.IsInTransition)
-                Gun.Shoot();
+            if (_animator.IsInTransition)
+                return;
+
+            _animator.Shoot();
+            _equipment.Gun.PullTrigger();
         }
 
-        private void GunShootByAnimation() => GunShoot();
+        protected virtual void PullUpTrigger() => _equipment.Gun.PullUpTrigger();
+        
+        private void PullTriggerByAnimation() => PullTrigger();
     }
 }

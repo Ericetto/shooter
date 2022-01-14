@@ -58,11 +58,13 @@ namespace Code.Human.Enemy
             while (_animator.IsInTransition)
                 yield return wait;
 
-            int shootCount = Gun.IsPistol ? 1 : 5;
+            int shootCount = _equipment.Gun.IsPistol ? 1 : 5;
 
             for (int i = 0; i < shootCount; i++)
             {
-                Shoot();
+                PullTrigger();
+                PullUpTrigger();
+
                 yield return wait;
             }
 

@@ -82,6 +82,7 @@ namespace Code.Infrastructure.StateMachine.States
 
         private Gun CreateHeroGun() => CreateRandomGun();
 
-        private Gun CreateRandomGun() => _gameFactory.CreateRandomGun(_bulletPool);
+        private Gun CreateRandomGun() =>
+            _gameFactory.CreateRandomGun(_bulletPool) as Gun;
     }   
 }

@@ -49,7 +49,6 @@ namespace Code.Infrastructure.StateMachine.States
             _services.RegisterSingle<IPoolContainer>(CreateBulletPool());
             _services.RegisterSingle<IGameFactory>(CreateGameFactory());
         }
-
         private IGameFactory CreateGameFactory()
         {
             return new GameFactory(

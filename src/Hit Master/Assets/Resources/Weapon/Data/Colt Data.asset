@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Colt Data
   m_EditorClassIdentifier: 
   Id: 2
-  Damage: 10
+  Damage: 9
+  IsAutomatic: 0
+  FireRate: 0
   IsPistol: 1
   Prefab: {fileID: 479081128261069569, guid: 3d0a5ec63dd1a5d42b6be5a135f4216f, type: 3}

@@ -33,17 +33,25 @@ namespace Code.Human.Hero
                         yield return null;
 
                     SetTarget();
-                    Shoot();
+                    PullTrigger();
                 }
+
+                if (_inputService.IsShootButtonUp())
+                    PullUpTrigger();
 
                 yield return null;
             }
         }
 
-        protected override void GunShoot()
+        protected override void PullTrigger()
         {
-            Gun.transform.LookAt(_targetPoint);
-            Gun.Shoot();
+            if (_animator.IsInTransition)
+                return;
+
+            _equipment.Gun.transform.LookAt(_targetPoint);
+
+            if (_equipment.Gun.PullTrigger())
+                _animator.Shoot();
         }
 
         private void SetTarget()

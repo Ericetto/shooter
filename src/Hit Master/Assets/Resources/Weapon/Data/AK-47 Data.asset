@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AK-47 Data
   m_EditorClassIdentifier: 
   Id: 0
-  Name: 
-  Damage: 10
+  Damage: 15
+  IsAutomatic: 1
+  FireRate: 600
+  IsPistol: 0
   Prefab: {fileID: 479081128261069569, guid: 25581fc52c912c047939f9bd6804f843, type: 3}

@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   Damage: 10
+  IsAutomatic: 1
+  FireRate: 800
+  IsPistol: 0
   Prefab: {fileID: 479081128261069569, guid: 8cef21d4d64ab9445828ba0776046180, type: 3}
