@@ -10,11 +10,11 @@ public class LoadMainSceneByKey : MonoBehaviour
 #if UNITY_EDITOR
     public KeyCode Key;
 
-    private IGameStateMachine _stateMachine;
+    private IStateMachine _stateMachine;
 
     private void Start()
     {
-        _stateMachine = AllServices.Container.Single<IGameStateMachine>();
+        _stateMachine = AllServices.Container.Single<IStateMachine>();
     }
 
     private void Update()

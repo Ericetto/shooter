@@ -1,6 +1,5 @@
 ﻿using Code.Infrastructure.Services;
 using Code.Infrastructure.StateMachine;
-using Code.Logic;
 
 namespace Code.Infrastructure
 {
@@ -12,6 +11,7 @@ namespace Code.Infrastructure
         {
             StateMachine = new GameStateMachine(
                 new SceneLoader(coroutineRunner),
+                coroutineRunner,
                 loadingCurtain,
                 AllServices.Container);
         }

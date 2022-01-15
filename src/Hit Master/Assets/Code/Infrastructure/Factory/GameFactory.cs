@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using Code.Infrastructure.Pooling;
 using Code.Infrastructure.Services.AssetProvider;
+using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.Services.Random;
 using Code.Infrastructure.StaticData;
+using Code.Level.Way;
+using Code.Level.Way.Follower;
+using Code.Level.Way.StateMachine;
 using Code.Weapon;
 using Code.Weapon.TriggerMechanism;
 
@@ -10,17 +14,24 @@ namespace Code.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
+        private readonly ICoroutineRunner _coroutineRunner;
         private readonly IAssetProvider _assetProvider;
         private readonly IStaticDataService _staticData;
         private readonly IRandomService _random;
+        private readonly IInputService _inputService;
 
-        public GameFactory(IAssetProvider assetProvider,
+        public GameFactory(
+            ICoroutineRunner coroutineRunner,
+            IAssetProvider assetProvider,
             IStaticDataService staticData,
-            IRandomService random)
+            IRandomService random,
+            IInputService inputService)
         {
+            _coroutineRunner = coroutineRunner;
             _assetProvider = assetProvider;
             _staticData = staticData;
             _random = random;
+            _inputService = inputService;
         }
 
         public IGun CreateRandomGun(IPoolContainer bulletPool) => 
@@ -41,7 +52,15 @@ namespace Code.Infrastructure.Factory
             return gun;
         }
 
-        private ITriggerMechanism CreateTriggerMechanism(GameObject gun, WeaponData weaponData)
+        public IWayStateMachine CreateWayStateMachine(
+            IWayPoint[] wayPoints, IWayFollower wayFollower, IWayShooting wayShooting)
+        {
+            return new WayStateMachine(
+                wayPoints,wayFollower, wayShooting, _coroutineRunner, _inputService);
+        }
+
+        private ITriggerMechanism CreateTriggerMechanism(
+            GameObject gun, WeaponData weaponData)
         {
             ITriggerMechanism triggerMechanism;
 

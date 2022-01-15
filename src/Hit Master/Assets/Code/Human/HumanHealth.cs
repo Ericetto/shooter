@@ -9,6 +9,8 @@ namespace Code.Human
         [SerializeField] protected float _current;
         [SerializeField] protected float _max;
 
+        public bool IsAlive => _current > 0;
+
         public float Current
         {
             get => _current;

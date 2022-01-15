@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Code.Infrastructure.Services.Input;
+using Code.Level.Way.Follower;
 
 namespace Code.Human.Hero
 {
-    public class HeroShooting : HumanShooting
+    public class HeroShooting : HumanShooting, IWayShooting
     {
         [SerializeField] private LayerMask _inputCastLayerMask;
 

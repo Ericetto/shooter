@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
+using Code.Level;
+using Code.Level.Way;
+using Code.Human;
 using Code.Human.Enemy;
 using Code.Human.Hero;
+using Code.Weapon;
 using Code.Infrastructure.Factory;
 using Code.Infrastructure.Pooling;
 using Code.Infrastructure.Services.Input;
-using Code.Logic;
-using Code.Weapon;
+using Code.Level.Way.StateMachine;
 
 namespace Code.Infrastructure.StateMachine.States
 {
     public class LoadLevelState : IPayloadedState<string>
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
@@ -19,7 +22,7 @@ namespace Code.Infrastructure.StateMachine.States
         private readonly IPoolContainer _bulletPool;
 
         public LoadLevelState(
-            GameStateMachine stateMachine,
+            IStateMachine stateMachine,
             SceneLoader sceneLoader,
             LoadingCurtain curtain,
             IGameFactory gameFactory,
@@ -47,33 +50,44 @@ namespace Code.Infrastructure.StateMachine.States
 
         private void OnLoaded()
         {
-            InitGameWorld();
-            _stateMachine.Enter<GameLoopState>();
+            ILevel level = IniLevel();
+            _stateMachine.Enter<GameLoopState, ILevel>(level);
         }
 
-        private void InitGameWorld()
+        private ILevel IniLevel()
         {
-            Transform hero = InitHero();
+            GameObject hero = InitHero();
             InitEnemies(hero);
+
+            return new Level.Level(
+                hero.GetComponent<HumanDeath>(),
+                CreateWayStateMachine(hero));
         }
 
-        private Transform InitHero()
+        private IWayStateMachine CreateWayStateMachine(GameObject hero)
+        {
+            return _gameFactory.CreateWayStateMachine(
+                Object.FindObjectsOfType<WayPoint>(),
+                hero.GetComponent<HeroWayFollower>(),
+                hero.GetComponent<HeroShooting>());
+        }
+
+        private GameObject InitHero()
         {
             GameObject hero = GameObject.FindGameObjectWithTag(Tags.Player);
             hero.GetComponent<HeroShooting>().Construct(_inputService);
             hero.GetComponent<HumanEquipment>().EquipGun(CreateHeroGun());
-            return hero.transform;
+            return hero;
         }
 
-        private void InitEnemies(Transform hero)
+        private void InitEnemies(GameObject hero)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(Tags.Enemy);
 
             foreach (GameObject enemy in enemies)
             {
                 EnemyShooting enemyShooting = enemy.GetComponent<EnemyShooting>();
-                enemyShooting.Construct(hero);
-                enemyShooting.Enable();
+                enemyShooting.Construct(hero.transform);
 
                 Gun gun = CreateRandomGun();
                 enemy.GetComponent<HumanEquipment>().EquipGun(gun);

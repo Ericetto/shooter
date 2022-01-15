@@ -11,16 +11,18 @@ namespace Code.Infrastructure.StateMachine.States
 {
     public class BootstrapState : IState
     {
-        private readonly GameStateMachine _stateMachine;
+        private readonly IStateMachine _stateMachine;
+        private readonly ICoroutineRunner _coroutineRunner;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _services;
 
-        public BootstrapState(
-            GameStateMachine stateMachine,
+        public BootstrapState(IStateMachine stateMachine,
+            ICoroutineRunner coroutineRunner,
             SceneLoader sceneLoader,
             AllServices services)
         {
             _stateMachine = stateMachine;
+            _coroutineRunner = coroutineRunner;
             _sceneLoader = sceneLoader;
             _services = services;
 
@@ -41,7 +43,7 @@ namespace Code.Infrastructure.StateMachine.States
 
         private void RegisterServices()
         {
-            _services.RegisterSingle<IGameStateMachine>(_stateMachine);
+            _services.RegisterSingle<IStateMachine>(_stateMachine);
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IInputService>(CreateInputService());
@@ -51,10 +53,11 @@ namespace Code.Infrastructure.StateMachine.States
         }
         private IGameFactory CreateGameFactory()
         {
-            return new GameFactory(
+            return new GameFactory(_coroutineRunner,
                 _services.Single<IAssetProvider>(),
                 _services.Single<IStaticDataService>(),
-                _services.Single<IRandomService>());
+                _services.Single<IRandomService>(),
+                _services.Single<IInputService>());
         }
 
         private IPoolContainer CreateBulletPool()

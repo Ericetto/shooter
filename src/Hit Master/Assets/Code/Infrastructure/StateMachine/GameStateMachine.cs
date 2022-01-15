@@ -10,14 +10,15 @@ namespace Code.Infrastructure.StateMachine
 {
     public class GameStateMachine : StateMachineBase
     {
-        public GameStateMachine(
-            SceneLoader sceneLoader,
+        public GameStateMachine(SceneLoader sceneLoader,
+            ICoroutineRunner coroutineRunner,
             LoadingCurtain loadingCurtain,
             AllServices services)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this,
+                    coroutineRunner,
                     sceneLoader,
                     services),
 
