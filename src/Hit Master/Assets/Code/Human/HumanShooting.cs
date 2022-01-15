@@ -15,7 +15,7 @@ namespace Code.Human
         
         protected virtual void PullTrigger()
         {
-            if (_animator.IsInTransition)
+            if (!_isActive || _animator.IsInTransition)
                 return;
 
             _animator.Shoot();

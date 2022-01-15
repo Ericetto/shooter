@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
-namespace Code.Logic
+namespace Code
 {
     public class LoadingCurtain : MonoBehaviour
     {
         public CanvasGroup Curtain;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(this);
-        }
+        private void Awake() => DontDestroyOnLoad(this);
 
         public void Show()
         {
@@ -18,10 +15,7 @@ namespace Code.Logic
             Curtain.alpha = 1;
         }
 
-        public void Hide()
-        {
-            StartCoroutine(FadeIn());
-        }
+        public void Hide() => StartCoroutine(FadeIn());
 
         private IEnumerator FadeIn()
         {

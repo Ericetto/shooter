@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Code.Infrastructure.StateMachine.States;
-using Code.Logic;
 
 namespace Code.Infrastructure
 {

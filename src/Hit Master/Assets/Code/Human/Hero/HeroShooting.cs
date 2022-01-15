@@ -18,6 +18,7 @@ namespace Code.Human.Hero
         {
             _camera = Camera.main;
             _inputService = inputService;
+            _isActive = true;
         }
 
         private IEnumerator Start()
@@ -27,17 +28,20 @@ namespace Code.Human.Hero
 
             while (true)
             {
-                if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
+                if (_isActive)
                 {
-                    while (_animator.IsInTransition)
-                        yield return null;
+                    if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
+                    {
+                        while (_animator.IsInTransition)
+                            yield return null;
 
-                    SetTarget();
-                    PullTrigger();
+                        SetTarget();
+                        PullTrigger();
+                    }
+
+                    if (_inputService.IsShootButtonUp())
+                        PullUpTrigger();
                 }
-
-                if (_inputService.IsShootButtonUp())
-                    PullUpTrigger();
 
                 yield return null;
             }
