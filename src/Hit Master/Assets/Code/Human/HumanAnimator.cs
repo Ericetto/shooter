@@ -4,6 +4,7 @@ using Code.Logic.AnimatorState;
 
 namespace Code.Human
 {
+    [RequireComponent(typeof(Animator))]
     public class HumanAnimator : MonoBehaviour, IAnimationStateReader
     {
         [SerializeField] private Animator _animator;
@@ -20,14 +21,14 @@ namespace Code.Human
         private int _runStateHash;
         private int _shootingStateHash;
 
-        private bool _canPlayShooting;
-
         public bool IsInTransition => _animator.IsInTransition(0);
 
         public AnimatorState State { get; private set; }
 
         public event Action<AnimatorState> StateEntered;
         public event Action<AnimatorState> StateExited;
+
+        private void Awake() => _animator = GetComponent<Animator>();
 
         public void SetGunType(bool isPistol)
         {
@@ -38,8 +39,21 @@ namespace Code.Human
             _shootingStateHash = Animator.StringToHash($"{gunType} Shooting");
             
             _animator.SetTrigger(isPistol ? _pistolTriggerParameterHash : _rifleTriggerParameterHash);
-
             _animator.Play(_emptyStateHash);
+        }
+
+        public void SetActive(bool value) => _animator.enabled = value;
+        public void Run() => _animator.SetBool(_runBoolParameterHash, true);
+        public void Stop() => _animator.SetBool(_runBoolParameterHash, false);
+        public void StartShooting() => _animator.SetBool(_shootingBoolParameterHash, true);
+        public void StopShooting() => _animator.SetBool(_shootingBoolParameterHash, false);
+
+        public void Shoot()
+        {
+            if (State != AnimatorState.Shooting)
+                StartShooting();
+            else
+                _animator.Play(_shootingStateHash, 0, 0);
         }
 
         public void EnteredState(int stateHash)
@@ -52,31 +66,6 @@ namespace Code.Human
         {
             StateExited?.Invoke(StateFor(stateHash));
         }
-        
-        public void Run() => _animator.SetBool(_runBoolParameterHash, true);
-        public void Stop() => _animator.SetBool(_runBoolParameterHash, false);
-        
-        public void StartShooting() => _animator.SetBool(_shootingBoolParameterHash, true);
-
-        public void Shoot()
-        {
-            if (State != AnimatorState.Shooting)
-            {
-                StartShooting();
-            }
-            else if (_canPlayShooting)
-            {
-                _canPlayShooting = false;
-                _animator.Play(_shootingStateHash, 0, 0);
-            }
-        }
-
-        // Call from Gun Shooting animation clip
-        private void ShootingClipFinished() => _canPlayShooting = true;
-
-        public void StopShooting() => _animator.SetBool(_shootingBoolParameterHash, false);
-
-        public void SetActive(bool value) => _animator.enabled = value;
 
         private AnimatorState StateFor(int stateHash)
         {

@@ -8,22 +8,26 @@ namespace Code.Human
         [SerializeField] protected HumanAnimator _animator;
         [SerializeField] protected HumanEquipment _equipment;
         
-        protected bool _isActive;
+        private bool _isActive;
 
+        public bool IsEnable => _isActive;
         public void Enable() => _isActive = true;
         public void Disable() => _isActive = false;
-        
-        protected virtual void PullTrigger()
-        {
-            if (!_isActive || _animator.IsInTransition)
-                return;
 
-            _animator.Shoot();
-            _equipment.Gun.PullTrigger();
+        private bool CanPullTrigger => _isActive && !_animator.IsInTransition;
+
+        protected void PullTrigger()
+        {
+            if (CanPullTrigger && _equipment.Gun.PullTrigger())
+                _animator.Shoot();
         }
 
-        protected virtual void PullUpTrigger() => _equipment.Gun.PullUpTrigger();
+        protected void PullUpTrigger() => _equipment.Gun.PullUpTrigger();
         
-        private void PullTriggerByAnimation() => PullTrigger();
+        private void PullTriggerByAnimation()
+        {
+            if (CanPullTrigger)
+                _equipment.Gun.PullTrigger();
+        }
     }
 }

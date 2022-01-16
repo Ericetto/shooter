@@ -10,7 +10,7 @@ namespace Code.Human.Enemy
         private float _currentAttackCooldown;
         
         private Transform _heroTransform;
-        private bool _isAttacking;
+        private bool _isShooting;
 
         public void Construct(Transform heroTransform)
         {
@@ -21,12 +21,12 @@ namespace Code.Human.Enemy
         {
             UpdateCooldown();
 
-            if (!_isActive)
+            if (!IsEnable)
                 return;
 
             LookAtHero();
 
-            if (!_isAttacking && _currentAttackCooldown <= 0)
+            if (!_isShooting && _currentAttackCooldown <= 0)
                 StartShooting();
         }
 
@@ -44,32 +44,35 @@ namespace Code.Human.Enemy
 
         private void StartShooting()
         {
+            _isShooting = true;
+            _animator.StartShooting();
             StartCoroutine(GunShooting());
         }
 
         private IEnumerator GunShooting()
         {
-            _isAttacking = true;
-
-            _animator.StartShooting();
-
             WaitForSeconds wait = new WaitForSeconds(0.25f);
 
-            while (_animator.IsInTransition)
-                yield return wait;
+            yield return TakeAim(wait);
 
             int shootCount = _equipment.Gun.IsPistol ? 1 : 5;
 
             for (int i = 0; i < shootCount; i++)
             {
                 PullTrigger();
-                PullUpTrigger();
-
                 yield return wait;
+                PullUpTrigger();
             }
 
             _currentAttackCooldown = _attackCooldown;
-            _isAttacking = false;
+            _isShooting = false;
+        }
+
+        private IEnumerator TakeAim(WaitForSeconds wait)
+        {
+            yield return wait;
+            while (_animator.IsInTransition)
+                yield return wait;
         }
     }
 }

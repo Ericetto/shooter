@@ -13,13 +13,11 @@ namespace Code.Human.Hero
 
         private IInputService _inputService;
         private Camera _camera;
-        private Vector3 _targetPoint;
 
         public void Construct(IInputService inputService)
         {
             _camera = Camera.main;
             _inputService = inputService;
-            _isActive = true;
         }
 
         private IEnumerator Start()
@@ -29,42 +27,36 @@ namespace Code.Human.Hero
 
             while (true)
             {
-                if (_isActive)
+                yield return null;
+                
+                if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
                 {
-                    if (_inputService.IsShootButtonDown() || _inputService.IsShootButton())
-                    {
-                        while (_animator.IsInTransition)
-                            yield return null;
+                    if (!IsEnable)
+                        continue;
 
-                        SetTarget();
-                        PullTrigger();
-                    }
+                    while (_animator.IsInTransition)
+                        yield return null;
 
-                    if (_inputService.IsShootButtonUp())
-                        PullUpTrigger();
+                    SetGunTarget();
+                    PullTrigger();
                 }
 
-                yield return null;
+                if (_inputService.IsShootButtonUp())
+                    PullUpTrigger();
             }
         }
 
-        protected override void PullTrigger()
+        private void SetGunTarget()
         {
             if (_animator.IsInTransition)
                 return;
 
-            _equipment.Gun.transform.LookAt(_targetPoint);
-
-            if (_equipment.Gun.PullTrigger())
-                _animator.Shoot();
-        }
-
-        private void SetTarget()
-        {
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-            _targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
+            Vector3 targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
                 hitInfo.point : ray.GetPoint(RaycastDistance);
+
+            _equipment.Gun.transform.LookAt(targetPoint);
         }
 
         private bool Raycast(Ray ray, out RaycastHit hitInfo) =>
