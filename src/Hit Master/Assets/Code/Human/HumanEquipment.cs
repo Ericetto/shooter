@@ -1,24 +1,33 @@
 ﻿using UnityEngine;
+using Code.Extensions;
 using Code.Human;
+using Code.Logic.AnimatorState;
 using Code.Weapon;
 
+[RequireComponent(typeof(HumanAnimator))]
 public class HumanEquipment : MonoBehaviour
 {
-    [SerializeField] protected HumanAnimator _animator;
     [SerializeField] protected Transform _rifleHolder;
     [SerializeField] protected Transform _pistolHolder;
 
+    protected HumanAnimator _animator;
+
     public Gun Gun { get; protected set; }
+
+    private void Awake()
+    {
+        _animator = GetComponent<HumanAnimator>();
+        _animator.StateExited += OnAnimationChange;
+    }
 
     public void EquipGun(Gun gun)
     {
         Gun = gun;
         Gun.transform.SetParent(gun.IsPistol ? _pistolHolder : _rifleHolder);
-        Gun.transform.localPosition = Vector3.zero;
-        Gun.transform.localRotation = Quaternion.identity;
-        Gun.transform.localScale = Vector3.one;
+        ResetGunTransform();
 
         _animator.SetGunType(gun.IsPistol);
+        _animator.StateExited += OnAnimationChange;
     }
 
     public void DropGun()
@@ -28,4 +37,14 @@ public class HumanEquipment : MonoBehaviour
         Gun.SetActivePhysics(true);
         Gun.AddForce(new Vector3(0, 350, 0));
     }
+
+    private void OnAnimationChange(AnimatorState _) => ResetGunTransform();
+
+    private void ResetGunTransform()
+    {
+        if (Gun != null)
+            Gun.transform.Reset();
+    }
+
+    private void OnDestroy() => _animator.StateExited -= OnAnimationChange;
 }

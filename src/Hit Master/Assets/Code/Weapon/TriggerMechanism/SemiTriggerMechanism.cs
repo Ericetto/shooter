@@ -1,23 +1,23 @@
-using Code.Infrastructure.StaticData;
 using UnityEngine;
+using Code.Infrastructure.StaticData;
 
 namespace Code.Weapon.TriggerMechanism
 {
     public class SemiTriggerMechanism : MonoBehaviour, ITriggerMechanism
     {
-        private bool _pullDown;
+        private bool _isPulledDown;
 
         public void Construct(WeaponData data) { }
 
         public bool PullTrigger()
         {
-            if (_pullDown)
+            if (_isPulledDown)
                 return false;
 
-            _pullDown = true;
+            _isPulledDown = true;
             return true;
         }
 
-        public void PullUpTrigger() => _pullDown = false;
+        public void PullUpTrigger() => _isPulledDown = false;
     }
 }
