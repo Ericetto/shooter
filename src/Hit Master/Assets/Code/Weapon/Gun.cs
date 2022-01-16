@@ -8,6 +8,7 @@ namespace Code.Weapon
 {
     public class Gun : MonoBehaviour, IGun
     {
+        [SerializeField] private ParticleSystem _flashParticle;
         [SerializeField] private Transform _startBulletTransform;
         [SerializeField] private float _bulletRecycleTime = 3f;
 
@@ -60,6 +61,8 @@ namespace Code.Weapon
             bullet.SetActive(true);
 
             StartCoroutine(RecycleBullet(bullet));
+
+            _flashParticle.Play();
         }
 
         private IEnumerator RecycleBullet(PoolObject bullet)
