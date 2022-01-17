@@ -1,9 +1,8 @@
-using UnityEngine;
 using Code.Infrastructure.StaticData;
 
 namespace Code.Weapon.TriggerMechanism
 {
-    public class SemiTriggerMechanism : MonoBehaviour, ITriggerMechanism
+    public class SemiTriggerMechanism : Equipment, ITriggerMechanism
     {
         private bool _isPulledDown;
 

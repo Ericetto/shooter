@@ -6,11 +6,13 @@ using Code.Weapon.TriggerMechanism;
 
 namespace Code.Weapon
 {
-    public class Gun : MonoBehaviour, IGun
+    public class Gun : Equipment, IGun
     {
         [SerializeField] private ParticleSystem _flashParticle;
         [SerializeField] private Transform _startBulletTransform;
         [SerializeField] private float _bulletRecycleTime = 3f;
+
+        public Collider Collider { get; private set; }
 
         private Rigidbody _rigidbody;
 
@@ -24,6 +26,7 @@ namespace Code.Weapon
         protected virtual void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            Collider = GetComponent<Collider>();
             SetActivePhysics(false);
         }
 
@@ -42,15 +45,17 @@ namespace Code.Weapon
 
         public bool PullTrigger()
         {
-            bool canShoot = _triggerMechanism.PullTrigger();
-
-            if (canShoot)
+            if (_triggerMechanism.PullTrigger())
+            {
                 Shoot();
+                return true;
+            }
 
-            return canShoot;
+            return false;
         }
 
         public void PullUpTrigger() => _triggerMechanism.PullUpTrigger();
+        public void LookAt(Vector3 at) => transform.LookAt(at);
 
         private void Shoot()
         {
@@ -70,6 +75,7 @@ namespace Code.Weapon
             yield return _bulletRecycleWait;
             bullet.Recycle();
         }
+
         public void AddForce(Vector3 force)
         {
             _rigidbody.AddForce(force, ForceMode.Acceleration);

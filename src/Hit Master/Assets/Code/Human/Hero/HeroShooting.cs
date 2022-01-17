@@ -56,7 +56,7 @@ namespace Code.Human.Hero
             Vector3 targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
                 hitInfo.point : ray.GetPoint(RaycastDistance);
 
-            _equipment.Gun.transform.LookAt(targetPoint);
+            _equipment.Gun.LookAt(targetPoint);
         }
 
         private bool Raycast(Ray ray, out RaycastHit hitInfo) =>

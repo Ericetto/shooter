@@ -8,6 +8,7 @@ using Code.Level.Way;
 using Code.Level.Way.Follower;
 using Code.Level.Way.StateMachine;
 using Code.Weapon;
+using Code.Weapon.BulletPool;
 using Code.Weapon.TriggerMechanism;
 
 namespace Code.Infrastructure.Factory
@@ -34,6 +35,13 @@ namespace Code.Infrastructure.Factory
             _inputService = inputService;
         }
 
+        public IWayStateMachine CreateWayStateMachine(
+            IWayPoint[] wayPoints, IWayFollower wayFollower, IWayShooting wayShooting)
+        {
+            return new WayStateMachine(
+                wayPoints,wayFollower, wayShooting, _coroutineRunner, _inputService);
+        }
+
         public IGun CreateRandomGun(IPoolContainer bulletPool) => 
             CreateGun(_random.Next(0, 3), bulletPool);
 
@@ -45,36 +53,60 @@ namespace Code.Infrastructure.Factory
                 .Instantiate(weaponData.PrefabPath)
                 .GetComponent<Gun>();
 
-            var triggerMechanism = CreateTriggerMechanism(gun.gameObject, weaponData);
+            var triggerMechanism = CreateTriggerMechanism(weaponData);
+            triggerMechanism.SetParent(gun.transform);
 
             gun.Construct(weaponData, triggerMechanism, bulletPool);
             
             return gun;
         }
 
-        public IWayStateMachine CreateWayStateMachine(
-            IWayPoint[] wayPoints, IWayFollower wayFollower, IWayShooting wayShooting)
+        private ITriggerMechanism CreateTriggerMechanism(WeaponData weaponData)
         {
-            return new WayStateMachine(
-                wayPoints,wayFollower, wayShooting, _coroutineRunner, _inputService);
-        }
+            GameObject trigger = new GameObject("Trigger");
 
-        private ITriggerMechanism CreateTriggerMechanism(
-            GameObject gun, WeaponData weaponData)
-        {
             ITriggerMechanism triggerMechanism;
 
             if (weaponData.IsAutomatic)
-                triggerMechanism = gun.AddComponent<AutomaticTriggerMechanism>();
+                triggerMechanism = trigger.AddComponent<AutomaticTriggerMechanism>();
             else
-                triggerMechanism = gun.AddComponent<SemiTriggerMechanism>();
+                triggerMechanism = trigger.AddComponent<SemiTriggerMechanism>();
 
             triggerMechanism.Construct(weaponData);
 
             return triggerMechanism;
         }
 
-        public IPoolContainer CreatePool(string assetPath) =>
-            new PoolContainer(_assetProvider, assetPath);
+        public IPoolContainer CreatePool(
+            string assetPath, Transform objectsHolder)
+        {
+            return new PoolContainer(
+                _assetProvider, assetPath, objectsHolder);
+        }
+
+        public IPoolContainer CreateBulletPool(
+            string bulletAssetPath,
+            IPoolContainer bloodHitFxPool,
+            IPoolContainer environmentHitFxPool,
+            Transform bulletsHolder)
+        {
+            return new BulletPoolContainer(
+                _assetProvider,
+                bulletAssetPath,
+                bloodHitFxPool,
+                environmentHitFxPool,
+                bulletsHolder);
+        }
+
+        public IPoolContainer CreateBulletHitFxPool(
+            string assetPath,
+            Transform bulletsHolder)
+        {
+            return new HitFxPoolContainer(
+                _assetProvider,
+                assetPath,
+                _coroutineRunner,
+                bulletsHolder);
+        }
     }
 }

@@ -3,7 +3,7 @@ using Code.Infrastructure.StaticData;
 
 namespace Code.Weapon.TriggerMechanism
 {
-    public class AutomaticTriggerMechanism : MonoBehaviour, ITriggerMechanism
+    public class AutomaticTriggerMechanism : Equipment, ITriggerMechanism
     {
         private float _betweenShotsTime;
         private float _cooldown;

@@ -2,7 +2,7 @@
 
 namespace Code.Weapon.TriggerMechanism
 {
-    public interface ITriggerMechanism
+    public interface ITriggerMechanism : IEquippable
     {
         void Construct(WeaponData data);
         bool PullTrigger();

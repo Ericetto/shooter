@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Code.Extensions;
 using Code.Human;
 using Code.Logic.AnimatorState;
 using Code.Weapon;
@@ -12,39 +11,39 @@ public class HumanEquipment : MonoBehaviour
 
     protected HumanAnimator _animator;
 
-    public Gun Gun { get; protected set; }
+    public IGun Gun { get; protected set; }
 
     private void Awake()
     {
         _animator = GetComponent<HumanAnimator>();
-        _animator.StateExited += OnAnimationChange;
+        _animator.StateExited += OnAnimationChanged;
     }
 
-    public void EquipGun(Gun gun)
+    public void EquipGun(IGun gun)
     {
         Gun = gun;
-        Gun.transform.SetParent(gun.IsPistol ? _pistolHolder : _rifleHolder);
+        Gun.SetParent(gun.IsPistol ? _pistolHolder : _rifleHolder);
         ResetGunTransform();
 
         _animator.SetGunType(gun.IsPistol);
-        _animator.StateExited += OnAnimationChange;
+        _animator.StateExited += OnAnimationChanged;
     }
 
     public void DropGun()
     {
-        Gun.transform.SetParent(null);
-        Gun.GetComponent<Collider>().enabled = true;
+        Gun.SetParent(null);
+        Gun.Collider.enabled = true;
         Gun.SetActivePhysics(true);
         Gun.AddForce(new Vector3(0, 350, 0));
     }
 
-    private void OnAnimationChange(AnimatorState _) => ResetGunTransform();
+    private void OnAnimationChanged(AnimatorState _) => ResetGunTransform();
 
     private void ResetGunTransform()
     {
         if (Gun != null)
-            Gun.transform.Reset();
+            Gun.ResetTransform();
     }
 
-    private void OnDestroy() => _animator.StateExited -= OnAnimationChange;
+    private void OnDestroy() => _animator.StateExited -= OnAnimationChanged;
 }
