@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Code.Infrastructure.Factory;
 using Code.Infrastructure.Services;
-using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.StateMachine.States;
 

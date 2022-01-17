@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System;
 using UnityEngine.AI;
+using System;
 using Code.Level.Way;
 using Code.Level.Way.Follower;
 

@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Code.AnimatorState;
+using UnityEngine;
 using Code.Human;
-using Code.Logic.AnimatorState;
 using Code.Weapon;
 
 [RequireComponent(typeof(HumanAnimator))]

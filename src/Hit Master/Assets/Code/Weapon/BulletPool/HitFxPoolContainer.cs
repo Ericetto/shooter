@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using Code.Infrastructure;
 using Code.Infrastructure.Pooling;
 using Code.Infrastructure.Services.AssetProvider;
-using UnityEngine;
 
 namespace Code.Weapon.BulletPool
 {

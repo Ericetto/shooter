@@ -1,4 +1,4 @@
-namespace Code.Logic.AnimatorState
+namespace Code.AnimatorState
 {
     public enum AnimatorState
     {

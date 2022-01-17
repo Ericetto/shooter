@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-using Code.Logic.AnimatorState;
+using Code.AnimatorState;
 
 namespace Code.Human
 {
@@ -23,10 +23,10 @@ namespace Code.Human
 
         public bool IsInTransition => _animator.IsInTransition(0);
 
-        public AnimatorState State { get; private set; }
+        public AnimatorState.AnimatorState State { get; private set; }
 
-        public event Action<AnimatorState> StateEntered;
-        public event Action<AnimatorState> StateExited;
+        public event Action<AnimatorState.AnimatorState> StateEntered;
+        public event Action<AnimatorState.AnimatorState> StateExited;
 
         private void Awake() => _animator = GetComponent<Animator>();
 
@@ -50,7 +50,7 @@ namespace Code.Human
 
         public void Shoot()
         {
-            if (State != AnimatorState.Shooting)
+            if (State != AnimatorState.AnimatorState.Shooting)
                 StartShooting();
             else
                 _animator.Play(_shootingStateHash, 0, 0);
@@ -67,16 +67,16 @@ namespace Code.Human
             StateExited?.Invoke(StateFor(stateHash));
         }
 
-        private AnimatorState StateFor(int stateHash)
+        private AnimatorState.AnimatorState StateFor(int stateHash)
         {
             if (stateHash == _idleStateHash)
-                return AnimatorState.Idle;
+                return AnimatorState.AnimatorState.Idle;
             if (stateHash == _shootingStateHash)
-                return AnimatorState.Shooting;
+                return AnimatorState.AnimatorState.Shooting;
             if (stateHash == _runStateHash)
-                return AnimatorState.Run;
+                return AnimatorState.AnimatorState.Run;
 
-            return AnimatorState.Unknown;
+            return AnimatorState.AnimatorState.Unknown;
         }
     }
 }

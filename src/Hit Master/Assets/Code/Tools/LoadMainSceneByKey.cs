@@ -1,9 +1,8 @@
-﻿using Code.Infrastructure;
-using UnityEngine;
+﻿using UnityEngine;
+using Code.Infrastructure;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.StateMachine;
 using Code.Infrastructure.StateMachine.States;
-using UnityEngine.SceneManagement;
 
 public class LoadMainSceneByKey : MonoBehaviour
 {

@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 4266226507956669323}
   m_Layer: 5
   m_Name: Curtain
-  m_TagString: LoadingCurtain
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

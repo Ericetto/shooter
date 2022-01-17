@@ -1,5 +1,5 @@
-﻿using Code.Extensions;
-using UnityEngine;
+﻿using UnityEngine;
+using Code.Extensions;
 
 namespace Code.Infrastructure.Pooling
 {
