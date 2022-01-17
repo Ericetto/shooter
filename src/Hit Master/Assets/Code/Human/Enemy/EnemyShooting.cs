@@ -3,7 +3,6 @@ using System.Collections;
 
 namespace Code.Human.Enemy
 {
-    [RequireComponent(typeof(HumanAnimator))]
     public class EnemyShooting : HumanShooting
     {
         [SerializeField] private float _attackCooldown = 3f;
@@ -45,7 +44,7 @@ namespace Code.Human.Enemy
         private void StartShooting()
         {
             _isShooting = true;
-            _animator.StartShooting();
+            Mediator.StartShooting();
             StartCoroutine(GunShooting());
         }
 
@@ -55,7 +54,7 @@ namespace Code.Human.Enemy
 
             yield return TakeAim(wait);
 
-            int shootCount = _equipment.Gun.IsPistol ? 1 : 5;
+            int shootCount = Mediator.IsPistolEquipped ? 1 : 5;
 
             for (int i = 0; i < shootCount; i++)
             {
@@ -71,7 +70,7 @@ namespace Code.Human.Enemy
         private IEnumerator TakeAim(WaitForSeconds wait)
         {
             yield return wait;
-            while (_animator.IsInTransition)
+            while (Mediator.AnimatorIsInTransition)
                 yield return wait;
         }
     }

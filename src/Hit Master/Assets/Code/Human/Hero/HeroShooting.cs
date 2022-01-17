@@ -34,7 +34,7 @@ namespace Code.Human.Hero
                     if (!IsEnable)
                         continue;
 
-                    while (_animator.IsInTransition)
+                    while (Mediator.AnimatorIsInTransition)
                         yield return null;
 
                     SetGunTarget();
@@ -48,7 +48,7 @@ namespace Code.Human.Hero
 
         private void SetGunTarget()
         {
-            if (_animator.IsInTransition)
+            if (Mediator.AnimatorIsInTransition)
                 return;
 
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -56,7 +56,7 @@ namespace Code.Human.Hero
             Vector3 targetPoint = Raycast(ray, out RaycastHit hitInfo) ?
                 hitInfo.point : ray.GetPoint(RaycastDistance);
 
-            _equipment.Gun.LookAt(targetPoint);
+            Mediator.SetGunTarget(targetPoint);
         }
 
         private bool Raycast(Ray ray, out RaycastHit hitInfo) =>

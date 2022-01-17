@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Code.Human;
 using Code.Human.Enemy;
 using System.Linq;
+using HumanHealth = Code.Human.HumanHealth;
 
 namespace Code.Level.Obstacle
 {
@@ -20,7 +20,7 @@ namespace Code.Level.Obstacle
                 if (!enemy.IsAlive)
                     continue;
 
-                enemy.GetComponent<HumanDeath>().Happened += OnEnemyDead;
+                enemy.Died += OnEnemyDead;
 
                 EnemyShooting shooting = enemy.GetComponent<EnemyShooting>();
 

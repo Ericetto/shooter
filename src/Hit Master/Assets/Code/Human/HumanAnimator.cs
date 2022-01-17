@@ -1,14 +1,13 @@
 using UnityEngine;
 using System;
 using Code.AnimatorState;
+using Code.Human.Mediator;
 
 namespace Code.Human
 {
     [RequireComponent(typeof(Animator))]
-    public class HumanAnimator : MonoBehaviour, IAnimationStateReader
+    public class HumanAnimator : HumanComponent, IAnimationStateReader
     {
-        [SerializeField] private Animator _animator;
-
         private readonly int _pistolTriggerParameterHash = Animator.StringToHash("Pistol");
         private readonly int _rifleTriggerParameterHash = Animator.StringToHash("Rifle");
 
@@ -20,6 +19,8 @@ namespace Code.Human
         private int _idleStateHash;
         private int _runStateHash;
         private int _shootingStateHash;
+        
+        private Animator _animator;
 
         public bool IsInTransition => _animator.IsInTransition(0);
 
@@ -28,7 +29,7 @@ namespace Code.Human
         public event Action<AnimatorState.AnimatorState> StateEntered;
         public event Action<AnimatorState.AnimatorState> StateExited;
 
-        private void Awake() => _animator = GetComponent<Animator>();
+        protected override void OnAwake() => _animator = GetComponent<Animator>();
 
         public void SetGunType(bool isPistol)
         {

@@ -1,23 +1,15 @@
-﻿using Code.AnimatorState;
-using UnityEngine;
+﻿using UnityEngine;
 using Code.Human;
+using Code.Human.Mediator;
 using Code.Weapon;
 
 [RequireComponent(typeof(HumanAnimator))]
-public class HumanEquipment : MonoBehaviour
+public class HumanEquipment : HumanComponent
 {
     [SerializeField] protected Transform _rifleHolder;
     [SerializeField] protected Transform _pistolHolder;
 
-    protected HumanAnimator _animator;
-
     public IGun Gun { get; protected set; }
-
-    private void Awake()
-    {
-        _animator = GetComponent<HumanAnimator>();
-        _animator.StateExited += OnAnimationChanged;
-    }
 
     public void EquipGun(IGun gun)
     {
@@ -25,8 +17,8 @@ public class HumanEquipment : MonoBehaviour
         Gun.SetParent(gun.IsPistol ? _pistolHolder : _rifleHolder);
         ResetGunTransform();
 
-        _animator.SetGunType(gun.IsPistol);
-        _animator.StateExited += OnAnimationChanged;
+        Mediator.SetGunType(gun.IsPistol);
+        Mediator.AnimatorStateExited += ResetGunTransform;
     }
 
     public void DropGun()
@@ -37,13 +29,12 @@ public class HumanEquipment : MonoBehaviour
         Gun.AddForce(new Vector3(0, 350, 0));
     }
 
-    private void OnAnimationChanged(AnimatorState _) => ResetGunTransform();
-
     private void ResetGunTransform()
     {
         if (Gun != null)
             Gun.ResetTransform();
     }
 
-    private void OnDestroy() => _animator.StateExited -= OnAnimationChanged;
+    private void OnDestroy() => 
+        Mediator.AnimatorStateExited -= ResetGunTransform;
 }

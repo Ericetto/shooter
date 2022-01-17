@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Code.Human.Mediator;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -6,18 +7,17 @@ using UnityEditor;
 
 namespace Code.Human
 {
-    public class HumanBody : MonoBehaviour
+    [RequireComponent(typeof(HumanAnimator), typeof(HumanHealth))]
+    public class HumanBody : HumanComponent
     {
-        [SerializeField] private HumanHealth _health;
-        [SerializeField] private HumanAnimator _animator;
         [SerializeField] private HumanBodyPart[] _bodyParts;
 
-        private void Awake()
+        private void Start()
         {
             DisablePhysics();
 
             foreach (HumanBodyPart bodyPart in _bodyParts)
-                bodyPart.Damaged += _health.TakeDamage;
+                bodyPart.Damaged += Mediator.TakeDamage;
         }
 
         public void EnablePhysics() => SetActivePhysics(true);
@@ -43,13 +43,13 @@ namespace Code.Human
                 bodyPart.Rigidbody.isKinematic = !value;
             }
 
-            _animator.SetActive(!value);
+            Mediator.SetActiveAnimator(!value);
         }
 
         private void OnDestroy()
         {
             foreach (HumanBodyPart bodyPart in _bodyParts)
-                bodyPart.Damaged -= _health.TakeDamage;
+                bodyPart.Damaged -= Mediator.TakeDamage;
         }
 
 #if UNITY_EDITOR

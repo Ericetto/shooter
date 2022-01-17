@@ -28,14 +28,10 @@ namespace Code.Human.Hero
             }
         }
 
-        public void SetPoint(IWayPoint wayPoint)
-        {
+        public void SetPoint(IWayPoint wayPoint) => 
             _navMeshAgent.SetDestination(wayPoint.Position);
-        }
 
-        public void SetLookTarget(Vector3 point)
-        {
+        public void SetLookTarget(Vector3 point) =>
             _lookAtPoint = point;
-        }
     }
 }

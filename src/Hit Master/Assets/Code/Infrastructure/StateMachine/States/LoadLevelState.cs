@@ -67,7 +67,7 @@ namespace Code.Infrastructure.StateMachine.States
             IWayStateMachine wayStateMachine = CreateWayStateMachine(hero);
 
             return new Level.Level(
-                hero.GetComponent<HumanDeath>(),
+                hero.GetComponent<HumanHealth>(),
                 wayStateMachine);
         }
 

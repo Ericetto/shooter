@@ -2994,9 +2994,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7571643892222976345}
   - component: {fileID: 7571643892222976350}
+  - component: {fileID: 7571643892222976354}
   - component: {fileID: 7571643892222976348}
   - component: {fileID: 7571643892222976351}
-  - component: {fileID: 7571643892222976354}
   - component: {fileID: 7571643892222976349}
   - component: {fileID: 1361892785721579856}
   m_Layer: 0
@@ -3042,6 +3042,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7571643892222976354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7571643892222976355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fadeda12b38bf234ea0df9eaf636831c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7571643892222976348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3069,22 +3081,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _current: 100
   _max: 100
---- !u!114 &7571643892222976354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7571643892222976355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fadeda12b38bf234ea0df9eaf636831c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 7571643892222976348}
-  _body: {fileID: 7571643892222976349}
-  _equipment: {fileID: 1361892785721579856}
-  _health: {fileID: 7571643892222976351}
 --- !u!114 &7571643892222976349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3097,8 +3093,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7114226ae16ed0459b200929e7b71ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 7571643892222976351}
-  _animator: {fileID: 7571643892222976348}
   _bodyParts:
   - {fileID: 169277328}
   - {fileID: 169277327}
@@ -3123,7 +3117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b2a478fd4170848914c2b8727f04d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 7571643892222976348}
   _rifleHolder: {fileID: 7571643891322823013}
   _pistolHolder: {fileID: 6490604154490270974}
 --- !u!1 &7571643892295937296

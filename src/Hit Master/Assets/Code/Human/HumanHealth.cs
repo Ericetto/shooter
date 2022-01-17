@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System;
+using Code.Human.Mediator;
 
 namespace Code.Human
 {
-    [RequireComponent(typeof(HumanAnimator))]
-    public class HumanHealth : MonoBehaviour
+    public class HumanHealth : HumanComponent
     {
         [SerializeField] protected float _current;
         [SerializeField] protected float _max;
-
+        
         public bool IsAlive => _current > 0;
 
         public float Current
@@ -24,11 +24,19 @@ namespace Code.Human
         }
 
         public event Action HealthChanged;
+        public event Action Died;
 
         public void TakeDamage(float damage)
         {
+            if (!IsAlive)
+                return;
+
             _current -= damage;
+
             HealthChanged?.Invoke();
+
+            if (_current <= 0)
+                Died?.Invoke();
         }
     }
 }
