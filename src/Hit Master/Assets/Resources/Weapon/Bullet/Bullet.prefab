@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startSpeed: 30
   _damage: 30
+  _trail: {fileID: 8251084603322765855}
 --- !u!82 &5809886816019964548
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4981,7 +4982,7 @@ GameObject:
   - component: {fileID: 8251084603322765855}
   - component: {fileID: 8251084603320808159}
   m_Layer: 0
-  m_Name: Spark Trail
+  m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

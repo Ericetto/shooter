@@ -93,6 +93,7 @@ namespace Code.Infrastructure.Factory
             return new BulletPoolContainer(
                 _assetProvider,
                 bulletAssetPath,
+                _coroutineRunner,
                 bloodHitFxPool,
                 environmentHitFxPool,
                 bulletsHolder);

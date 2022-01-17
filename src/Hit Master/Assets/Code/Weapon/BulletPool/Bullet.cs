@@ -1,6 +1,7 @@
-﻿using Code.Human;
+﻿using UnityEngine;
+using Code.Human;
+using Code.Infrastructure;
 using Code.Infrastructure.Pooling;
-using UnityEngine;
 
 namespace Code.Weapon.BulletPool
 {
@@ -8,12 +9,28 @@ namespace Code.Weapon.BulletPool
     {
         [SerializeField] private float _startSpeed;
         [SerializeField] private float _damage;
-
+        [SerializeField] private ParticleSystem _trail;
+        
         private IPoolContainer _bloodHitFxPool;
         private IPoolContainer _environmentHitFxPool;
 
-        private void Update() => 
-            transform.Translate(Vector3.forward * _startSpeed * Time.deltaTime);
+        private MeshRenderer _mesh;
+        private bool _isCollided;
+
+        private void Awake() => _mesh = GetComponent<MeshRenderer>();
+
+        private void OnEnable()
+        {
+            _isCollided = false;
+            _mesh.enabled = true;
+            _trail.Play();
+        }
+
+        private void Update()
+        {
+            if (!_isCollided)
+                transform.Translate(Vector3.forward * _startSpeed * Time.deltaTime);
+        }
 
         public void Init(
             IPoolContainer bloodHitFxPool,
@@ -25,28 +42,32 @@ namespace Code.Weapon.BulletPool
 
         private void OnTriggerEnter(Collider other)
         {
+            _trail.Stop();
+
             if (other.TryGetComponent(out HumanBodyPart humanBodyPart))
             {
-                OnBodyPartTriggered(humanBodyPart);
+                ImpactBodyPart(humanBodyPart);
+                PlayBloodHitFx();
             }
             else 
             {
                 if (other.TryGetComponent(out Rigidbody otherRigidbody))
                     AddForceToRigidbody(otherRigidbody);
 
+                if (other.tag == Tags.NonThroughShootable)
+                {
+                    _isCollided = true;
+                    _mesh.enabled = false;
+                }
+
                 PlayEnvironmentHitFx();
             }
-
-            GetComponent<PoolObject>().Recycle();
         }
 
-        private void OnBodyPartTriggered(HumanBodyPart bodyPart)
+        private void ImpactBodyPart(HumanBodyPart bodyPart)
         {
             bodyPart.TakeDamage(_damage);
-            
             AddForceToRigidbody(bodyPart.Rigidbody);
-
-            PlayBloodHitFx();
         }
 
         private void PlayEnvironmentHitFx()
