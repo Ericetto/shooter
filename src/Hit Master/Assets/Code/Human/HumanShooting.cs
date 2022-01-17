@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-using Code.Human.Mediator;
+﻿using Code.Human.Mediator;
 
 namespace Code.Human
 {
-    [RequireComponent(typeof(HumanAnimator), typeof(HumanEquipment))]
     public abstract class HumanShooting : HumanComponent
     {
         private bool _isActive;

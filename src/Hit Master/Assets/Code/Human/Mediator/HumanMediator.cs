@@ -60,17 +60,15 @@ namespace Code.Human.Mediator
             _animator.Stop();
         }
 
-
         private void OnDied()
         {
             _health.HealthChanged -= OnDied;
 
-            _equipment.DropGun();
-            _shooting.enabled = false;
-            _animator.enabled = false;
+            SetActiveAnimator(false);
 
+            _shooting.Disable();
+            _equipment.DropGun();
             _body.EnablePhysics();
         }
-
     }
 }
