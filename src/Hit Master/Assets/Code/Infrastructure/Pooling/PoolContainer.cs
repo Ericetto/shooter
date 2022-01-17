@@ -35,9 +35,10 @@ namespace Code.Infrastructure.Pooling
                 GameObject go = _assetProvider.Instantiate(_prefabPath);
                 obj = go.AddComponent<PoolObject>();
                 obj.SetPool(this);
+                InitObject(obj);
             }
 
-            obj.SetActive(false);
+            OnGetting(obj);
 
             return obj;
         }
@@ -48,7 +49,8 @@ namespace Code.Infrastructure.Pooling
             {
                 obj.SetActive(false);
 
-                if (_objectsHolder != null)
+                if (_objectsHolder != null &&
+                    obj.transform.parent != _objectsHolder)
                     obj.transform.SetParent(_objectsHolder);
 
                 if (!_store.Contains(obj))
@@ -59,5 +61,8 @@ namespace Code.Infrastructure.Pooling
                 Debug.LogWarning("Invalid obj to recycle", obj);
             }
         }
+
+        protected virtual void InitObject(PoolObject obj) { }
+        protected virtual void OnGetting(PoolObject obj) => obj.SetActive(false);
     }
 }

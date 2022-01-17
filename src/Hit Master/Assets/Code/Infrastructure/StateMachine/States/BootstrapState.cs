@@ -48,7 +48,6 @@ namespace Code.Infrastructure.StateMachine.States
             _services.RegisterSingle<IAssetProvider>(new AssetProvider());
             _services.RegisterSingle<IInputService>(CreateInputService());
             _services.RegisterSingle<IStaticDataService>(CreateStaticDataService());
-            _services.RegisterSingle<IPoolContainer>(CreateBulletPool());
             _services.RegisterSingle<IGameFactory>(CreateGameFactory());
         }
         private IGameFactory CreateGameFactory()
@@ -58,17 +57,6 @@ namespace Code.Infrastructure.StateMachine.States
                 _services.Single<IStaticDataService>(),
                 _services.Single<IRandomService>(),
                 _services.Single<IInputService>());
-        }
-
-        private IPoolContainer CreateBulletPool()
-        {
-            GameObject bulletPoolHolder = new GameObject("Bullet Holder");
-            Object.DontDestroyOnLoad(bulletPoolHolder);
-
-            return new PoolContainer(
-                _services.Single<IAssetProvider>(),
-                AssetPath.Bullet,
-                bulletPoolHolder.transform);
         }
 
         private IStaticDataService CreateStaticDataService()

@@ -7,6 +7,7 @@ using Code.Human.Hero;
 using Code.Weapon;
 using Code.Infrastructure.Factory;
 using Code.Infrastructure.Pooling;
+using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Level.Way.StateMachine;
 
@@ -19,22 +20,19 @@ namespace Code.Infrastructure.StateMachine.States
         private readonly LoadingCurtain _curtain;
         private readonly IGameFactory _gameFactory;
         private readonly IInputService _inputService;
-        private readonly IPoolContainer _bulletPool;
 
         public LoadLevelState(
             IStateMachine stateMachine,
             SceneLoader sceneLoader,
             LoadingCurtain curtain,
             IGameFactory gameFactory,
-            IInputService inputService,
-            IPoolContainer bulletPool)
+            IInputService inputService)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _curtain = curtain;
             _gameFactory = gameFactory;
             _inputService = inputService;
-            _bulletPool = bulletPool;
         }
 
         public void Enter(string sceneName)
@@ -96,7 +94,25 @@ namespace Code.Infrastructure.StateMachine.States
 
         private Gun CreateHeroGun() => CreateRandomGun();
 
+        private IPoolContainer CreatePool(string assetPath, Transform objectsHolder) =>
+            _gameFactory.CreatePool(assetPath, objectsHolder);
+
         private Gun CreateRandomGun() =>
             _gameFactory.CreateRandomGun(_bulletPool) as Gun;
+        private IPoolContainer CreateBulletPool(
+            IPoolContainer bloodHitFxPool,
+            IPoolContainer environmentHitFxPool,
+            Transform bulletsHolder)
+        {
+            return _gameFactory.CreateBulletPool(
+                AssetPath.Bullet, bloodHitFxPool, environmentHitFxPool, bulletsHolder);
+        }
+
+        private IPoolContainer CreateBulletHitFxPool(
+            string assetPath, Transform bulletsHolder)
+        {
+            return _gameFactory.CreateBulletHitFxPool(
+                assetPath, bulletsHolder);
+        }
     }   
 }

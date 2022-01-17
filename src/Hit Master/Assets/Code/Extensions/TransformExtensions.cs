@@ -11,5 +11,14 @@ namespace Code.Extensions
             transform.localScale = Vector3.one;
             return transform;
         }
+
+        public static void CopyFrom(this Transform transform, Transform other, bool withScale = false)
+        {
+            transform.localPosition = other.localPosition;
+            transform.localRotation = other.localRotation;
+
+            if (withScale)
+                transform.localScale = other.localScale;
+        }
     }
 }

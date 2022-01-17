@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Code.Extensions;
+using UnityEngine;
 
 namespace Code.Infrastructure.Pooling
 {
@@ -10,15 +11,20 @@ namespace Code.Infrastructure.Pooling
 
         public void Recycle()
         {
-            if (Pool == null)
-                return;
-
-            Pool.Recycle(this);
-            OnRecycle();
+            if (Pool != null)
+                Pool.Recycle(this);
         }
 
-        protected virtual void OnRecycle() { }
+        public GameObject SetActive(bool state)
+        {
+            gameObject.SetActive(state);
+            return gameObject;
+        }
 
-        public void SetActive(bool state) => gameObject.SetActive(state);
+        public GameObject SetTransform(Transform other)
+        {
+            transform.CopyFrom(other);
+            return gameObject;
+        }
     }
 }
