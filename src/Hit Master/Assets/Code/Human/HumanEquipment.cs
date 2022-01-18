@@ -4,10 +4,12 @@ using Code.Weapon;
 
 namespace Code.Human
 {
-    public class HumanEquipment : HumanComponent
+    internal class HumanEquipment : HumanComponent
     {
         [SerializeField] protected Transform _rifleHolder;
         [SerializeField] protected Transform _pistolHolder;
+
+        private readonly Vector3 _dropWeaponForce = new Vector3(0, 350, 0);
 
         public IGun Gun { get; protected set; }
 
@@ -26,7 +28,8 @@ namespace Code.Human
             Gun.SetParent(null);
             Gun.Collider.enabled = true;
             Gun.SetActivePhysics(true);
-            Gun.AddForce(new Vector3(0, 350, 0));
+            Gun.Rigidbody.AddForce(_dropWeaponForce, ForceMode.Acceleration);
+            Gun.Rigidbody.AddTorque(_dropWeaponForce);
         }
 
         private void ResetGunTransform()

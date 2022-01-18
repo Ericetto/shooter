@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Code.Infrastructure.Services.AssetProvider
+namespace AssetProvider
 {
-    public class AssetProvider : IAssetProvider
+    public class ResourceProvider : IAssetProvider
     {
         public GameObject Instantiate(string path)
         {
@@ -22,6 +22,6 @@ namespace Code.Infrastructure.Services.AssetProvider
             return Object.Instantiate(prefab, parent);
         }
 
-        private GameObject Load(string path) => Resources.Load<GameObject>(path);
+        public GameObject Load(string path) => Resources.Load<GameObject>(path);
     }
 }

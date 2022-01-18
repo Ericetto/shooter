@@ -1,12 +1,12 @@
-﻿using Code.Infrastructure.Physics;
-using Code.Infrastructure.Pooling;
+﻿using UnityEngine;
+using Code.Infrastructure.Physics;
 using Code.Infrastructure.StaticData;
 using Code.Weapon.TriggerMechanism;
-using UnityEngine;
+using Pooling;
 
 namespace Code.Weapon
 {
-    public interface IGun : IEquippable, IPhysical
+    internal interface IGun : IEquippable, IPhysical
     {
         bool IsPistol { get; }
         void Construct(WeaponData data, ITriggerMechanism triggerMechanism, IPoolContainer bulletPool);

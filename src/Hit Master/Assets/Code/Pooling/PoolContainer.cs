@@ -1,23 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Code.Infrastructure.Services.AssetProvider;
 
-namespace Code.Infrastructure.Pooling
+namespace Pooling
 {
     public class PoolContainer : IPoolContainer
     {
-        private readonly IAssetProvider _assetProvider;
-        private readonly string _prefabPath;
+        private readonly GameObject _prefab;
         private readonly Transform _objectsHolder;
         private readonly Stack<PoolObject> _store;
 
         public PoolContainer(
-            IAssetProvider assetProvider,
-            string prefabPath,
+            GameObject prefab,
             Transform objectsHolder = null)
         {
-            _assetProvider = assetProvider;
-            _prefabPath = prefabPath;
+            _prefab = prefab;
             _objectsHolder = objectsHolder;
             _store = new Stack<PoolObject>(64);
         }
@@ -32,7 +28,7 @@ namespace Code.Infrastructure.Pooling
             }
             else
             {
-                GameObject go = _assetProvider.Instantiate(_prefabPath);
+                GameObject go = Object.Instantiate(_prefab);
                 obj = go.AddComponent<PoolObject>();
                 obj.SetPool(this);
                 InitObject(obj);

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using Code.Infrastructure.Pooling;
-using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.Services.Random;
 using Code.Infrastructure.StaticData;
@@ -10,10 +8,12 @@ using Code.Level.Way.StateMachine;
 using Code.Weapon;
 using Code.Weapon.BulletPool;
 using Code.Weapon.TriggerMechanism;
+using Pooling;
+using AssetProvider;
 
 namespace Code.Infrastructure.Factory
 {
-    public class GameFactory : IGameFactory
+    internal class GameFactory : IGameFactory
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IAssetProvider _assetProvider;
@@ -78,21 +78,19 @@ namespace Code.Infrastructure.Factory
         }
 
         public IPoolContainer CreatePool(
-            string assetPath, Transform objectsHolder)
+            GameObject prefab, Transform objectsHolder)
         {
             return new PoolContainer(
-                _assetProvider, assetPath, objectsHolder);
+                _assetProvider.Load(AssetPath.Bullet), objectsHolder);
         }
 
         public IPoolContainer CreateBulletPool(
-            string bulletAssetPath,
             IPoolContainer bloodHitFxPool,
             IPoolContainer environmentHitFxPool,
             Transform bulletsHolder)
         {
             return new BulletPoolContainer(
-                _assetProvider,
-                bulletAssetPath,
+                _assetProvider.Load(AssetPath.Bullet),
                 _coroutineRunner,
                 bloodHitFxPool,
                 environmentHitFxPool,
@@ -100,14 +98,10 @@ namespace Code.Infrastructure.Factory
         }
 
         public IPoolContainer CreateBulletHitFxPool(
-            string assetPath,
-            Transform bulletsHolder)
+            string assetPath, Transform bulletsHolder)
         {
             return new HitFxPoolContainer(
-                _assetProvider,
-                assetPath,
-                _coroutineRunner,
-                bulletsHolder);
+                _assetProvider.Load(assetPath), _coroutineRunner, bulletsHolder);
         }
     }
 }

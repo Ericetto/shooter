@@ -6,7 +6,7 @@ using Code.Human.Mediator;
 namespace Code.Human
 {
     [RequireComponent(typeof(Animator))]
-    public class HumanAnimator : HumanComponent, IAnimationStateReader
+    internal class HumanAnimator : HumanComponent, IAnimationStateReader
     {
         private readonly int _pistolTriggerParameterHash = Animator.StringToHash("Pistol");
         private readonly int _rifleTriggerParameterHash = Animator.StringToHash("Rifle");

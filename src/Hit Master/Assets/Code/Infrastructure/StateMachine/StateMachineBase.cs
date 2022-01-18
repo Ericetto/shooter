@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Code.Infrastructure.StateMachine
 {
-    public class StateMachineBase : IStateMachine
+    internal class StateMachineBase : IStateMachine
     {
         protected Dictionary<Type, IExitableState> _states;
         protected IExitableState _activeState;

@@ -1,0 +1,16 @@
+{
+    "name": "AssetProvider",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d757b418b85540b479b4c00c8a15cd29"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

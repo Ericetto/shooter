@@ -7,7 +7,7 @@ using Code.Level.Way.Follower;
 namespace Code.Human.Hero
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class HeroWayFollower : MonoBehaviour, IWayFollower
+    internal class HeroWayFollower : MonoBehaviour, IWayFollower
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private float _destinationDistance;

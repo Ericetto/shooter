@@ -4,7 +4,7 @@ using Code.Human.Mediator;
 
 namespace Code.Human
 {
-    public class HumanHealth : HumanComponent
+    internal class HumanHealth : HumanComponent
     {
         [SerializeField] protected float _current;
         [SerializeField] protected float _max;

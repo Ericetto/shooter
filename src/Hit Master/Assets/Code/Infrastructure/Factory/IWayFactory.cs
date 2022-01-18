@@ -4,7 +4,7 @@ using Code.Level.Way.StateMachine;
 
 namespace Code.Infrastructure.Factory
 {
-    public interface IWayFactory
+    internal interface IWayFactory
     {
         IWayStateMachine CreateWayStateMachine(
             IWayPoint[] wayPoints,

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Code.Human.Enemy
 {
-    public class EnemyShooting : HumanShooting
+    internal class EnemyShooting : HumanShooting
     {
         [SerializeField] private float _attackCooldown = 3f;
         private float _currentAttackCooldown;

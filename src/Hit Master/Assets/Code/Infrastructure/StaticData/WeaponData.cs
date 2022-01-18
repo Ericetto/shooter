@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Code.Infrastructure.Services.AssetProvider;
 
 namespace Code.Infrastructure.StaticData
 {

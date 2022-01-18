@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using Code.Extensions;
+using Extensions;
 
 namespace Code.Weapon
 {
-    public class Equipment : MonoBehaviour
+    internal class Equipment : MonoBehaviour
     {
         public void SetParent(Transform parent) => transform.SetParent(parent);
         public void ResetTransform() => transform.Reset();

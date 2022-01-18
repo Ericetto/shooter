@@ -1,6 +1,6 @@
 ﻿namespace Code.Level.Way.Follower
 {
-    public interface IWayShooting
+    internal interface IWayShooting
     {
         void Enable();
         void Disable();

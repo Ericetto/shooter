@@ -1,8 +1,8 @@
-﻿using Code.Infrastructure.Services;
+﻿using Code.Infrastructure.ServiceLocator;
 
 namespace Code.Infrastructure.Factory
 {
-    public interface IGameFactory : IService, IGunFactory, IPoolFactory, IWayFactory
+    internal interface IGameFactory : IService, IGunFactory, IPoolFactory, IWayFactory
     {
 
     }

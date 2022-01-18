@@ -1,4 +1,4 @@
-﻿using Code.Infrastructure.Services;
+﻿using Code.Infrastructure.ServiceLocator;
 
 namespace Code.Infrastructure.StateMachine
 {

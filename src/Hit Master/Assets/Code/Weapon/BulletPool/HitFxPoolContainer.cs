@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Code.Infrastructure;
-using Code.Infrastructure.Pooling;
-using Code.Infrastructure.Services.AssetProvider;
+using Pooling;
 
 namespace Code.Weapon.BulletPool
 {
-    public class HitFxPoolContainer : PoolContainer
+    internal class HitFxPoolContainer : PoolContainer
     {
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly WaitForSeconds _delayWait;
 
         public HitFxPoolContainer(
-            IAssetProvider assetProvider,
-            string prefabPath,
+            GameObject prefab,
             ICoroutineRunner coroutineRunner,
             Transform objectsHolder = null)
-            : base(assetProvider, prefabPath, objectsHolder)
+            : base(prefab, objectsHolder)
         {
             _coroutineRunner = coroutineRunner;
             _delayWait = new WaitForSeconds(2f);

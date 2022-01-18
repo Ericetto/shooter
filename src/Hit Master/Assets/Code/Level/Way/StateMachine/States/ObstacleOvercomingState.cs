@@ -3,7 +3,7 @@ using Code.Level.Way.Follower;
 
 namespace Code.Level.Way.StateMachine.States
 {
-    public class ObstacleOvercomingState : IWayPayloadedState<IObstacle>
+    internal class ObstacleOvercomingState : IWayPayloadedState<IObstacle>
     {
         private readonly IWayStateMachine _stateMachine;
         private readonly IWayFollower _heroFollower;

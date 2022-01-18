@@ -1,4 +1,6 @@
-﻿namespace Code.Infrastructure.Services.Input
+﻿using Code.Infrastructure.ServiceLocator;
+
+namespace Code.Infrastructure.Services.Input
 {
     public interface IInputService : IService
     {

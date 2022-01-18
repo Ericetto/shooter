@@ -5,7 +5,7 @@ using HumanHealth = Code.Human.HumanHealth;
 
 namespace Code.Level.Obstacle
 {
-    public class EnemyObstacle : ObstacleBase
+    internal class EnemyObstacle : ObstacleBase
     {
         [SerializeField] private HumanHealth[] _enemies;
 

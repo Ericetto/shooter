@@ -2,7 +2,7 @@ using Code.Infrastructure.StaticData;
 
 namespace Code.Weapon.TriggerMechanism
 {
-    public class SemiTriggerMechanism : Equipment, ITriggerMechanism
+    internal class SemiTriggerMechanism : Equipment, ITriggerMechanism
     {
         private bool _isPulledDown;
 

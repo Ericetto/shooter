@@ -1,6 +1,6 @@
 ﻿namespace Code.Infrastructure.Services.Input
 {
-    public class MobileInputService : InputService
+    internal class MobileInputService : InputService
     {
         private const string FireButton = "Fire";
 

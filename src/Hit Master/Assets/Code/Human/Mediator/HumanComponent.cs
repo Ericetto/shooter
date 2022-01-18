@@ -3,7 +3,7 @@
 namespace Code.Human.Mediator
 {
     [RequireComponent(typeof(HumanMediator))]
-    public class HumanComponent : MonoBehaviour
+    internal class HumanComponent : MonoBehaviour
     {
         protected HumanMediator Mediator { get; private set; }
 

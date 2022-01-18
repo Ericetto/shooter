@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
-using Code.Infrastructure.Pooling;
 using Code.Infrastructure.StaticData;
 using Code.Weapon.TriggerMechanism;
+using Pooling;
 
 namespace Code.Weapon
 {
-    public class Gun : Equipment, IGun
+    internal class Gun : Equipment, IGun
     {
         [SerializeField] private ParticleSystem _flashParticle;
         [SerializeField] private Transform _startBulletTransform;
@@ -15,6 +15,7 @@ namespace Code.Weapon
         public Collider Collider { get; private set; }
 
         private Rigidbody _rigidbody;
+        public Rigidbody Rigidbody => _rigidbody;
 
         public float Damage { get; private set; }
         public bool IsPistol { get; private set; }
@@ -74,12 +75,6 @@ namespace Code.Weapon
         {
             yield return _bulletRecycleWait;
             bullet.Recycle();
-        }
-
-        public void AddForce(Vector3 force)
-        {
-            _rigidbody.AddForce(force, ForceMode.Acceleration);
-            _rigidbody.AddTorque(force);
         }
 
         public void SetActivePhysics(bool value)

@@ -2,7 +2,7 @@
 
 namespace Code.Weapon
 {
-    public interface IEquippable
+    internal interface IEquippable
     {
         void SetParent(Transform parent);
         void ResetTransform();

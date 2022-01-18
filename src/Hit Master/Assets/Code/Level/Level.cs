@@ -5,7 +5,7 @@ using System;
 
 namespace Code.Level
 {
-    public class Level : ILevel
+    internal class Level : ILevel
     {
         private readonly HumanHealth _heroMediator;
         private readonly IWayStateMachine _wayStateMachine;

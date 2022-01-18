@@ -1,6 +1,6 @@
 ﻿namespace Code.Infrastructure.Services.Input
 {
-    public class StandaloneInputService : InputService
+    internal class StandaloneInputService : InputService
     {
         public override bool IsShootButton()
         {

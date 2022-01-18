@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Pooling;
 using Code.Level;
 using Code.Level.Way;
 using Code.Human;
@@ -6,14 +7,12 @@ using Code.Human.Enemy;
 using Code.Human.Hero;
 using Code.Weapon;
 using Code.Infrastructure.Factory;
-using Code.Infrastructure.Pooling;
-using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Level.Way.StateMachine;
 
 namespace Code.Infrastructure.StateMachine.States
 {
-    public class LoadLevelState : IPayloadedState<string>
+    internal class LoadLevelState : IPayloadedState<string>
     {
         private readonly IStateMachine _stateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -115,8 +114,8 @@ namespace Code.Infrastructure.StateMachine.States
         private IGun CreateRandomGun(IPoolContainer bulletPool) =>
             _gameFactory.CreateRandomGun(bulletPool);
 
-        private IPoolContainer CreatePool(string assetPath, Transform objectsHolder) =>
-            _gameFactory.CreatePool(assetPath, objectsHolder);
+        private IPoolContainer CreatePool(GameObject prefab, Transform objectsHolder) =>
+            _gameFactory.CreatePool(prefab, objectsHolder);
 
         private IPoolContainer CreateBulletPool(
             IPoolContainer bloodHitFxPool,
@@ -124,7 +123,7 @@ namespace Code.Infrastructure.StateMachine.States
             Transform bulletsHolder)
         {
             return _gameFactory.CreateBulletPool(
-                AssetPath.Bullet, bloodHitFxPool, environmentHitFxPool, bulletsHolder);
+                bloodHitFxPool, environmentHitFxPool, bulletsHolder);
         }
 
         private IPoolContainer CreateBulletHitFxPool(

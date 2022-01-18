@@ -2,12 +2,12 @@
 
 namespace Code.Level.Way.StateMachine
 {
-    public interface IWayState : IState
+    internal interface IWayState : IState
     {
 
     }
 
-    public interface IWayPayloadedState<TPayload> : IPayloadedState<TPayload>
+    internal interface IWayPayloadedState<TPayload> : IPayloadedState<TPayload>
     {
 
     }

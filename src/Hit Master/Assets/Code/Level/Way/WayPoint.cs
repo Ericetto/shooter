@@ -3,7 +3,7 @@ using Code.Level.Obstacle;
 
 namespace Code.Level.Way
 {
-    public class WayPoint : MonoBehaviour, IWayPoint
+    internal class WayPoint : MonoBehaviour, IWayPoint
     {
         [SerializeField] private int _id;
         [SerializeField] private WayPointType _type;

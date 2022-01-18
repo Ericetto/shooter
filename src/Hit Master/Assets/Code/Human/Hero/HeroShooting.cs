@@ -5,7 +5,7 @@ using Code.Level.Way.Follower;
 
 namespace Code.Human.Hero
 {
-    public class HeroShooting : HumanShooting, IWayShooting
+    internal class HeroShooting : HumanShooting, IWayShooting
     {
         [SerializeField] private LayerMask _inputCastLayerMask;
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Code
 {
-    public class LoadingCurtain : MonoBehaviour
+    internal class LoadingCurtain : MonoBehaviour
     {
         public CanvasGroup Curtain;
 

@@ -4,8 +4,8 @@ namespace Code.Infrastructure.Physics
 {
     public interface IPhysical
     {
+        Rigidbody Rigidbody { get; }
         Collider Collider { get; }
-        void AddForce(Vector3 force);
         void SetActivePhysics(bool value);
     }
 }

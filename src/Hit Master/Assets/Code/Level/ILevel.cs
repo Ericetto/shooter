@@ -2,7 +2,7 @@
 
 namespace Code.Level
 {
-    public interface ILevel
+    internal interface ILevel
     {
         void Start();
 

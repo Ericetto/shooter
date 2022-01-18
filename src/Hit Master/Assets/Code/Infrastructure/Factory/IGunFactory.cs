@@ -1,9 +1,9 @@
-﻿using Code.Infrastructure.Pooling;
+﻿using Pooling;
 using Code.Weapon;
 
 namespace Code.Infrastructure.Factory
 {
-    public interface IGunFactory
+    internal interface IGunFactory
     {
         IGun CreateRandomGun(IPoolContainer bulletPool);
         IGun CreateGun(int id, IPoolContainer bulletPool);

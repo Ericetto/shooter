@@ -1,13 +1,12 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using Pooling;
+using System.Collections;
 using Code.Infrastructure;
-using Code.Infrastructure.Pooling;
-using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.StaticData;
-using UnityEngine;
 
 namespace Code.Weapon.BulletPool
 {
-    public class BulletPoolContainer : PoolContainer
+    internal class BulletPoolContainer : PoolContainer
     {
         private readonly WeaponData _weaponData;
         private readonly IPoolContainer _bloodHitFxPool;
@@ -16,13 +15,12 @@ namespace Code.Weapon.BulletPool
         private readonly WaitForSeconds _delayWait;
 
         public BulletPoolContainer(
-            IAssetProvider assetProvider,
-            string prefabPath,
+            GameObject prefab,
             ICoroutineRunner coroutineRunner,
             IPoolContainer bloodHitFxPool,
             IPoolContainer environmentHitFxPool,
             Transform objectsHolder = null)
-            : base(assetProvider, prefabPath, objectsHolder)
+            : base(prefab, objectsHolder)
         {
             _bloodHitFxPool = bloodHitFxPool;
             _environmentHitFxPool = environmentHitFxPool;

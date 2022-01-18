@@ -1,6 +1,6 @@
 ﻿namespace Code.Level.Way
 {
-    public enum WayPointType
+    internal enum WayPointType
     {
         Way,
         Start,

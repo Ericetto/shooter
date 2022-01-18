@@ -6,7 +6,7 @@ using Code.Level.Way.Follower;
 
 namespace Code.Level.Way.StateMachine.States
 {
-    public class WaitForTapState : IWayState
+    internal class WaitForTapState : IWayState
     {
         private readonly IWayStateMachine _stateMachine;
         private readonly ICoroutineRunner _coroutineRunner;

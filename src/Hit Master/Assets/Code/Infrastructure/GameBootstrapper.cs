@@ -3,7 +3,7 @@ using Code.Infrastructure.StateMachine.States;
 
 namespace Code.Infrastructure
 {
-    public class GameBootstrapper : Singleton<GameBootstrapper>, ICoroutineRunner
+    internal class GameBootstrapper : Singleton<GameBootstrapper>, ICoroutineRunner
     {
         [SerializeField] private LoadingCurtain _curtainPrefab;
 

@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace Code.Human
 {
-    public class HumanBody : HumanComponent
+    internal class HumanBody : HumanComponent
     {
         [SerializeField] private HumanBodyPart[] _bodyParts;
 

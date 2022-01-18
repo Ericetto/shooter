@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Code.Level.Obstacle
 {
-    public class WallObstacle : ObstacleBase
+    internal class WallObstacle : ObstacleBase
     {
         [SerializeField] private Rigidbody _checkRigidbody;
 

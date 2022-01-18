@@ -1,9 +1,9 @@
-﻿using Code.Infrastructure.Services;
+﻿using Code.Infrastructure.ServiceLocator;
 using Code.Infrastructure.StateMachine;
 
 namespace Code.Infrastructure
 {
-    public class Game
+    internal class Game
     {
         public GameStateMachine StateMachine;
 
@@ -13,7 +13,7 @@ namespace Code.Infrastructure
                 new SceneLoader(coroutineRunner),
                 coroutineRunner,
                 loadingCurtain,
-                AllServices.Container);
+                new AllServices());
         }
     }
 }

@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using Code.Infrastructure.Factory;
-using Code.Infrastructure.Services;
-using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.Services.Random;
 using Code.Infrastructure.StaticData;
+using Code.Infrastructure.ServiceLocator;
+using AssetProvider;
 
 namespace Code.Infrastructure.StateMachine.States
 {
-    public class BootstrapState : IState
+    internal class BootstrapState : IState
     {
         private readonly IStateMachine _stateMachine;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly SceneLoader _sceneLoader;
-        private readonly AllServices _services;
+        private readonly IServiceLocator _services;
 
         public BootstrapState(IStateMachine stateMachine,
             ICoroutineRunner coroutineRunner,
             SceneLoader sceneLoader,
-            AllServices services)
+            IServiceLocator services)
         {
             _stateMachine = stateMachine;
             _coroutineRunner = coroutineRunner;
@@ -44,7 +44,7 @@ namespace Code.Infrastructure.StateMachine.States
         {
             _services.RegisterSingle<IStateMachine>(_stateMachine);
             _services.RegisterSingle<IRandomService>(new UnityRandomService());
-            _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _services.RegisterSingle<IAssetProvider>(new ResourceProvider());
             _services.RegisterSingle<IInputService>(CreateInputService());
             _services.RegisterSingle<IStaticDataService>(CreateStaticDataService());
             _services.RegisterSingle<IGameFactory>(CreateGameFactory());

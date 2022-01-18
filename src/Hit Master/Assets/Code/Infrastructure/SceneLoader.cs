@@ -2,11 +2,11 @@
 using UnityEngine.SceneManagement;
 using System;
 using System.Collections;
-using Code.Infrastructure.Services;
+using Code.Infrastructure.ServiceLocator;
 
 namespace Code.Infrastructure
 {
-    public class SceneLoader : IService
+    internal class SceneLoader : IService
     {
         private readonly ICoroutineRunner _coroutineRunner;
 

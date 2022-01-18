@@ -6,7 +6,7 @@ using Code.Level.Way.Follower;
 
 namespace Code.Level.Way.StateMachine.States
 {
-    public class RunToNexPointState : IWayState
+    internal class RunToNexPointState : IWayState
     {
         private readonly IWayStateMachine _stateMachine;
         private readonly IWayFollower _heroFollower;

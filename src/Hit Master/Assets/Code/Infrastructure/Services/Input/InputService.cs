@@ -1,6 +1,6 @@
 ﻿namespace Code.Infrastructure.Services.Input
 {
-    public abstract class InputService : IInputService
+    internal abstract class InputService : IInputService
     {
         public abstract bool IsShootButton();
         public abstract bool IsShootButtonUp();

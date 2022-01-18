@@ -5,7 +5,7 @@ using Code.Human.Mediator;
 namespace Code.Human.Hero
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class HeroAnimatorAlongAgent : HumanComponent
+    internal class HeroAnimatorAlongAgent : HumanComponent
     {
         private NavMeshAgent _agent;
 

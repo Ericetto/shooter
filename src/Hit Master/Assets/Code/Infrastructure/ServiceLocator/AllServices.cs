@@ -1,11 +1,7 @@
-﻿namespace Code.Infrastructure.Services
+﻿namespace Code.Infrastructure.ServiceLocator
 {
-    public class AllServices
+    public class AllServices : IServiceLocator
     {
-        private static AllServices _instance;
-
-        public static AllServices Container => _instance ??= new AllServices();
-
         public void RegisterSingle<TService>(TService implementation) where TService : IService
         {
             Implementation<TService>.ServiceInstance = implementation;

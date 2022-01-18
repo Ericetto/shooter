@@ -3,7 +3,7 @@ using Code.Level.Obstacle;
 
 namespace Code.Level.Way
 {
-    public interface IWayPoint
+    internal interface IWayPoint
     {
         int Id { get; }
         WayPointType Type { get; }

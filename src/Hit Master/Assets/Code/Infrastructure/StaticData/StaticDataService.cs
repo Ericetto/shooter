@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Linq;
-using Code.Infrastructure.Services.AssetProvider;
-using UnityEngine;
 
 namespace Code.Infrastructure.StaticData
 {
-    public class StaticDataService : IStaticDataService
+    internal class StaticDataService : IStaticDataService
     {
         private Dictionary<int, WeaponData> _weapon;
 

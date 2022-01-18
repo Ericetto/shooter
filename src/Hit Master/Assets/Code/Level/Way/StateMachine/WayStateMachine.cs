@@ -8,7 +8,7 @@ using Code.Level.Way.StateMachine.States;
 
 namespace Code.Level.Way.StateMachine
 {
-    public class WayStateMachine : StateMachineBase, IWayStateMachine
+    internal class WayStateMachine : StateMachineBase, IWayStateMachine
     {
         public event Action Completed;
 

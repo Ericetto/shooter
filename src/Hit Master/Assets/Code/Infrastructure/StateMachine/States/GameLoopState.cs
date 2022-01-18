@@ -2,7 +2,7 @@
 
 namespace Code.Infrastructure.StateMachine.States
 {
-    public class GameLoopState : IPayloadedState<ILevel>
+    internal class GameLoopState : IPayloadedState<ILevel>
     {
         private readonly IStateMachine _stateMachine;
         private ILevel _level;

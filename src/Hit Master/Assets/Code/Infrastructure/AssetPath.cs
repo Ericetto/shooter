@@ -1,4 +1,4 @@
-﻿namespace Code.Infrastructure.Services.AssetProvider
+﻿namespace Code.Infrastructure
 {
     public static class AssetPath
     {

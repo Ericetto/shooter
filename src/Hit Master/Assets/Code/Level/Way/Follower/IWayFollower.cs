@@ -3,7 +3,7 @@ using System;
 
 namespace Code.Level.Way.Follower
 {
-    public interface IWayFollower
+    internal interface IWayFollower
     {
         event Action PointReached;
         void SetPoint(IWayPoint wayPoint);

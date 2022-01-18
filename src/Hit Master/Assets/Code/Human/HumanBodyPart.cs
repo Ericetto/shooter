@@ -4,7 +4,7 @@ using System;
 namespace Code.Human
 {
     [RequireComponent(typeof(Collider))]
-    public class HumanBodyPart : MonoBehaviour
+    internal class HumanBodyPart : MonoBehaviour
     {
         [SerializeField] private float _damageModifier = 1;
 

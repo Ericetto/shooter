@@ -3,7 +3,7 @@ using System;
 
 namespace Code.Level.Obstacle
 {
-    public abstract class ObstacleBase : MonoBehaviour, IObstacle
+    internal abstract class ObstacleBase : MonoBehaviour, IObstacle
     {
         public virtual Vector3 LookAtPoint { get; protected set; }
 

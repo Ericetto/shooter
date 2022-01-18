@@ -2,7 +2,7 @@
 
 namespace Code.Human
 {
-    public abstract class HumanShooting : HumanComponent
+    internal abstract class HumanShooting : HumanComponent
     {
         private bool _isActive;
 

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using Extensions;
 using Code.Human;
 using Code.Infrastructure;
-using Code.Infrastructure.Pooling;
+using Pooling;
 
 namespace Code.Weapon.BulletPool
 {
@@ -76,8 +77,11 @@ namespace Code.Weapon.BulletPool
             fx.position = transform.position;
         }
 
-        private void PlayBloodHitFx() =>
-            _bloodHitFxPool.Get().SetTransform(transform);
+        private void PlayBloodHitFx()
+        {
+            Transform fx = _bloodHitFxPool.Get().transform;
+            fx.CopyFrom(transform);
+        }
 
         private void AddForceToRigidbody(Rigidbody rb) => rb.AddForce(
                 transform.forward * _startSpeed * 50, ForceMode.Acceleration);
