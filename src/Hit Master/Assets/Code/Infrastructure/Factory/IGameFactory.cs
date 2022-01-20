@@ -2,7 +2,7 @@
 
 namespace Code.Infrastructure.Factory
 {
-    public interface IGameFactory : IService, IGunFactory, IPoolFactory, IWayFactory
+    public interface IGameFactory : IService, IGunFactory, IPoolFactory, IPathFactory
     {
 
     }

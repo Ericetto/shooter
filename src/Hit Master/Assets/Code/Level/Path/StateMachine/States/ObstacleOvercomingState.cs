@@ -1,20 +1,20 @@
 ﻿using Code.Level.Obstacle;
-using Code.Level.Way.Follower;
+using Code.Level.Path.Follower;
 
-namespace Code.Level.Way.StateMachine.States
+namespace Code.Level.Path.StateMachine.States
 {
-    public class ObstacleOvercomingState : IWayPayloadedState<IObstacle>
+    public class ObstacleOvercomingState : IPathPayloadedState<IObstacle>
     {
-        private readonly IWayStateMachine _stateMachine;
-        private readonly IWayFollower _heroFollower;
-        private readonly IWayShooting _heroShooting;
+        private readonly IPathStateMachine _stateMachine;
+        private readonly IPathFollower _heroFollower;
+        private readonly IPathShooting _heroShooting;
 
         private IObstacle _obstacle;
 
         public ObstacleOvercomingState(
-            IWayStateMachine stateMachine,
-            IWayFollower heroFollower,
-            IWayShooting heroShooting)
+            IPathStateMachine stateMachine,
+            IPathFollower heroFollower,
+            IPathShooting heroShooting)
         {
             _stateMachine = stateMachine;
             _heroFollower = heroFollower;

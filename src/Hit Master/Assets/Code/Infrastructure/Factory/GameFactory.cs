@@ -4,9 +4,9 @@ using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.Services.Random;
 using Code.Infrastructure.StaticData;
-using Code.Level.Way;
-using Code.Level.Way.Follower;
-using Code.Level.Way.StateMachine;
+using Code.Level.Path;
+using Code.Level.Path.Follower;
+using Code.Level.Path.StateMachine;
 using Code.Weapon;
 using Code.Weapon.BulletPool;
 using Code.Weapon.TriggerMechanism;
@@ -35,11 +35,11 @@ namespace Code.Infrastructure.Factory
             _inputService = inputService;
         }
 
-        public IWayStateMachine CreateWayStateMachine(
-            IWayPoint[] wayPoints, IWayFollower wayFollower, IWayShooting wayShooting)
+        public IPathStateMachine CreateWayStateMachine(
+            IWayPoint[] wayPoints, IPathFollower pathFollower, IPathShooting pathShooting)
         {
-            return new WayStateMachine(
-                wayPoints,wayFollower, wayShooting, _coroutineRunner, _inputService);
+            return new PathStateMachine(
+                wayPoints,pathFollower, pathShooting, _coroutineRunner, _inputService);
         }
 
         public IGun CreateRandomGun(IPoolContainer bulletPool) => 

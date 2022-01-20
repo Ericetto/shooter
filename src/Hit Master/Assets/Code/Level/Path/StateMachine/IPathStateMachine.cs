@@ -1,9 +1,9 @@
 ﻿using System;
 using Code.Infrastructure.StateMachine;
 
-namespace Code.Level.Way.StateMachine
+namespace Code.Level.Path.StateMachine
 {
-    public interface IWayStateMachine : IStateMachine
+    public interface IPathStateMachine : IStateMachine
     {
         event Action Completed;
         void OnCompleted();

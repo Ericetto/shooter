@@ -1,22 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using Code.Infrastructure;
 using Code.Infrastructure.Services.Input;
-using Code.Level.Way.Follower;
+using Code.Level.Path.Follower;
+using UnityEngine;
 
-namespace Code.Level.Way.StateMachine.States
+namespace Code.Level.Path.StateMachine.States
 {
-    public class WaitForTapState : IWayState
+    public class WaitForTapState : IPathState
     {
-        private readonly IWayStateMachine _stateMachine;
+        private readonly IPathStateMachine _stateMachine;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IWayShooting _heroShooting;
+        private readonly IPathShooting _heroShooting;
         private readonly IInputService _inputService;
 
         public WaitForTapState(
-            IWayStateMachine stateMachine,
+            IPathStateMachine stateMachine,
             ICoroutineRunner coroutineRunner,
-            IWayShooting heroShooting,
+            IPathShooting heroShooting,
             IInputService inputService)
         {
             _stateMachine = stateMachine;

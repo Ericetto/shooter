@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 using System;
-using Code.Level.Way;
-using Code.Level.Way.Follower;
+using Code.Level.Path;
+using Code.Level.Path.Follower;
 
 namespace Code.Human.Hero
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class HeroWayFollower : MonoBehaviour, IWayFollower
+    public class HeroPathFollower : MonoBehaviour, IPathFollower
     {
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private float _destinationDistance;

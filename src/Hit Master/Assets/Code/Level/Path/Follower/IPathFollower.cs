@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 
-namespace Code.Level.Way.Follower
+namespace Code.Level.Path.Follower
 {
-    public interface IWayFollower
+    public interface IPathFollower
     {
         event Action PointReached;
         void SetPoint(IWayPoint wayPoint);

@@ -1,30 +1,30 @@
 ﻿using Code.Human;
-using Code.Level.Way.StateMachine;
-using Code.Level.Way.StateMachine.States;
 using System;
+using Code.Level.Path.StateMachine;
+using Code.Level.Path.StateMachine.States;
 
 namespace Code.Level
 {
     public class Level : ILevel
     {
         private readonly HumanHealth _heroMediator;
-        private readonly IWayStateMachine _wayStateMachine;
+        private readonly IPathStateMachine _pathStateMachine;
         
         public event Action Finished;
         public event Action Failed;
 
-        public Level(HumanHealth heroHealth, IWayStateMachine wayStateMachine)
+        public Level(HumanHealth heroHealth, IPathStateMachine pathStateMachine)
         {
             _heroMediator = heroHealth;
-            _wayStateMachine = wayStateMachine;
+            _pathStateMachine = pathStateMachine;
         }
 
         public void Start()
         {
             _heroMediator.Died += OnFailed;
-            _wayStateMachine.Completed += OnFinish;
+            _pathStateMachine.Completed += OnFinish;
 
-            _wayStateMachine.Enter<RunToNexPointState>();
+            _pathStateMachine.Enter<RunToNexPointState>();
         }
 
         public void OnFinish()
@@ -42,7 +42,7 @@ namespace Code.Level
         private void Cleanup()
         {
             _heroMediator.Died -= OnFailed;
-            _wayStateMachine.Completed -= OnFinish;
+            _pathStateMachine.Completed -= OnFinish;
         }
     }
 }

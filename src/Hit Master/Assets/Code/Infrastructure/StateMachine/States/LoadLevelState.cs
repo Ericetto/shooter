@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Code.Level;
-using Code.Level.Way;
 using Code.Human;
 using Code.Human.Enemy;
 using Code.Human.Hero;
@@ -9,7 +8,8 @@ using Code.Infrastructure.Factory;
 using Code.Infrastructure.Pooling;
 using Code.Infrastructure.Services.AssetProvider;
 using Code.Infrastructure.Services.Input;
-using Code.Level.Way.StateMachine;
+using Code.Level.Path;
+using Code.Level.Path.StateMachine;
 
 namespace Code.Infrastructure.StateMachine.States
 {
@@ -64,11 +64,11 @@ namespace Code.Infrastructure.StateMachine.States
 
             InitEnemies(bulletPool, hero);
 
-            IWayStateMachine wayStateMachine = CreateWayStateMachine(hero);
+            IPathStateMachine pathStateMachine = CreateWayStateMachine(hero);
 
             return new Level.Level(
                 hero.GetComponent<HumanHealth>(),
-                wayStateMachine);
+                pathStateMachine);
         }
 
         private IPoolContainer CreateBulletPool(Transform bulletHolder)
@@ -82,11 +82,11 @@ namespace Code.Infrastructure.StateMachine.States
             return CreateBulletPool(bloodHitFxPool, environmentHitFxPool, bulletHolder);
         }
 
-        private IWayStateMachine CreateWayStateMachine(GameObject hero)
+        private IPathStateMachine CreateWayStateMachine(GameObject hero)
         {
             return _gameFactory.CreateWayStateMachine(
                 Object.FindObjectsOfType<WayPoint>(),
-                hero.GetComponent<HeroWayFollower>(),
+                hero.GetComponent<HeroPathFollower>(),
                 hero.GetComponent<HeroShooting>());
         }
 

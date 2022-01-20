@@ -1,4 +1,4 @@
-﻿namespace Code.Level.Way
+﻿namespace Code.Level.Path
 {
     public enum WayPointType
     {

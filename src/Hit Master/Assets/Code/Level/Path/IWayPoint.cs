@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using Code.Level.Obstacle;
+﻿using Code.Level.Obstacle;
+using UnityEngine;
 
-namespace Code.Level.Way
+namespace Code.Level.Path
 {
     public interface IWayPoint
     {

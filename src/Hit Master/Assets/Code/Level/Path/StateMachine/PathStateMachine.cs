@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using Code.Infrastructure;
 using Code.Infrastructure.Services.Input;
 using Code.Infrastructure.StateMachine;
-using Code.Level.Way.Follower;
-using Code.Level.Way.StateMachine.States;
+using Code.Level.Path.Follower;
+using Code.Level.Path.StateMachine.States;
 
-namespace Code.Level.Way.StateMachine
+namespace Code.Level.Path.StateMachine
 {
-    public class WayStateMachine : StateMachineBase, IWayStateMachine
+    public class PathStateMachine : StateMachineBase, IPathStateMachine
     {
         public event Action Completed;
 
-        public WayStateMachine(
+        public PathStateMachine(
             IWayPoint[] points,
-            IWayFollower heroFollower,
-            IWayShooting heroShooting,
+            IPathFollower heroFollower,
+            IPathShooting heroShooting,
             ICoroutineRunner coroutineRunner,
             IInputService inputService)
         {

@@ -1,23 +1,23 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Level.Obstacle;
-using Code.Level.Way.Follower;
+using Code.Level.Path.Follower;
+using UnityEngine;
 
-namespace Code.Level.Way.StateMachine.States
+namespace Code.Level.Path.StateMachine.States
 {
-    public class RunToNexPointState : IWayState
+    public class RunToNexPointState : IPathState
     {
-        private readonly IWayStateMachine _stateMachine;
-        private readonly IWayFollower _heroFollower;
-        private readonly IWayShooting _heroShooting;
+        private readonly IPathStateMachine _stateMachine;
+        private readonly IPathFollower _heroFollower;
+        private readonly IPathShooting _heroShooting;
         private readonly Dictionary<int, IWayPoint> _points;
 
         private IWayPoint _currentWayPoint;
 
-        public RunToNexPointState(IWayStateMachine stateMachine,
-            IWayFollower heroFollower,
-            IWayShooting heroShooting,
+        public RunToNexPointState(IPathStateMachine stateMachine,
+            IPathFollower heroFollower,
+            IPathShooting heroShooting,
             IWayPoint[] points)
         {
             _stateMachine = stateMachine;
