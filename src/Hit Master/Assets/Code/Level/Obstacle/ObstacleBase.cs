@@ -7,6 +7,8 @@ namespace Code.Level.Obstacle
     {
         public virtual Vector3 LookAtPoint { get; protected set; }
 
+        public virtual bool IsDestroyed { get; }
+
         public event Action Overcame;
 
         public virtual void Init() { }

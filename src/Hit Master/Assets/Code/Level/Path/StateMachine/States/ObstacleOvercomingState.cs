@@ -23,7 +23,7 @@ namespace Code.Level.Path.StateMachine.States
 
         public void Enter(IObstacle obstacle)
         {
-            if (obstacle == null)
+            if (obstacle == null || obstacle.IsDestroyed)
             {
                 OnObstacleOvercame();
                 return;

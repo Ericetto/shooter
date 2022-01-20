@@ -11,6 +11,8 @@ namespace Code.Level.Obstacle
 
         public override Vector3 LookAtPoint => CalcLookAtPoint();
 
+        public override bool IsDestroyed => AliveCount() == 0;
+
         public override void Init() => InitEnemies();
 
         private void InitEnemies()

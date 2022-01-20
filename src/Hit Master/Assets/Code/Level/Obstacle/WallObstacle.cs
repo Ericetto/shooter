@@ -9,6 +9,8 @@ namespace Code.Level.Obstacle
 
         private Vector3 _checkRigidbodyStartPosition;
 
+        public override bool IsDestroyed => CheckDistance();
+
         public override void Init()
         {
             _checkRigidbodyStartPosition = _checkRigidbody.position;
