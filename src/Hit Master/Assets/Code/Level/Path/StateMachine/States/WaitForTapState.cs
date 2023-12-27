@@ -33,10 +33,7 @@ namespace Code.Level.Path.StateMachine.States
                 WaitForTapToMoveNext());
         }
 
-        public void Exit()
-        {
-
-        }
+        public void Exit() { }
 
         private IEnumerator WaitForTapToMoveNext()
         {

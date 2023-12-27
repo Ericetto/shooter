@@ -15,24 +15,24 @@ namespace Code.Infrastructure.Factory
 {
     public class GameFactory : IGameFactory
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-        private readonly IAssetProvider _assetProvider;
+        private readonly ICoroutineRunner   _coroutineRunner;
+        private readonly IAssetProvider     _assetProvider;
         private readonly IStaticDataService _staticData;
-        private readonly IRandomService _random;
-        private readonly IInputService _inputService;
+        private readonly IInputService      _inputService;
+        private readonly IRandomService     _random;
 
         public GameFactory(
-            ICoroutineRunner coroutineRunner,
-            IAssetProvider assetProvider,
+            ICoroutineRunner   coroutineRunner,
+            IAssetProvider     assetProvider,
             IStaticDataService staticData,
-            IRandomService random,
-            IInputService inputService)
+            IRandomService     random,
+            IInputService      inputService)
         {
             _coroutineRunner = coroutineRunner;
-            _assetProvider = assetProvider;
-            _staticData = staticData;
-            _random = random;
-            _inputService = inputService;
+            _assetProvider   = assetProvider;
+            _staticData      = staticData;
+            _inputService    = inputService;
+            _random          = random;
         }
 
         public IPathStateMachine CreateWayStateMachine(
@@ -93,7 +93,6 @@ namespace Code.Infrastructure.Factory
             return new BulletPoolContainer(
                 _assetProvider,
                 bulletAssetPath,
-                _coroutineRunner,
                 bloodHitFxPool,
                 environmentHitFxPool,
                 bulletsHolder);

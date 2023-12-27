@@ -10,10 +10,7 @@ namespace Code.Infrastructure
     {
         private readonly ICoroutineRunner _coroutineRunner;
 
-        public SceneLoader(ICoroutineRunner coroutineRunner)
-        {
-            _coroutineRunner = coroutineRunner;
-        }
+        public SceneLoader(ICoroutineRunner coroutineRunner) => _coroutineRunner = coroutineRunner;
 
         public void Load(string name, Action onLoaded = null)
         {

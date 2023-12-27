@@ -28,17 +28,11 @@ namespace Code.Infrastructure.StateMachine.States
             RegisterServices();
         }
 
-        public void Enter()
-        {
-            _sceneLoader.Load(SceneNames.Init, EnterLoadLevel);
-        }
+        public void Enter() => _sceneLoader.Load(SceneNames.Init, EnterLoadLevel);
 
         public void Exit() { }
 
-        private void EnterLoadLevel()
-        {
-            _stateMachine.Enter<LoadLevelState, string>(SceneNames.Main);
-        }
+        private void EnterLoadLevel() => _stateMachine.Enter<LoadLevelState, string>(SceneNames.Main);
 
         private void RegisterServices()
         {

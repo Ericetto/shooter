@@ -5,11 +5,12 @@ namespace Code.Level.Path
 {
     public interface IWayPoint
     {
-        int Id { get; }
+        int          Id { get; }
         WayPointType Type { get; }
-        Vector3 Position { get; }
-        Vector3 LookAtPoint { get; }
-        IObstacle Obstacle { get; }
+        Vector3      Position { get; }
+        Vector3      LookAtPoint { get; }
+        IObstacle    Obstacle { get; }
+        
         void Init();
     }
 }

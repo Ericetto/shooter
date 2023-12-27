@@ -23,18 +23,18 @@ namespace Code.Weapon.BulletPool
         {
             _isCollided = false;
             _mesh.enabled = true;
-            _trail.Play();
+            ActivateTrail();
         }
+
+        private void OnDisable() => DeactivateTrail();
 
         private void Update()
         {
             if (!_isCollided)
-                transform.Translate(Vector3.forward * _startSpeed * Time.deltaTime);
+                transform.Translate(Vector3.forward * (_startSpeed * Time.deltaTime));
         }
 
-        public void Init(
-            IPoolContainer bloodHitFxPool,
-            IPoolContainer environmentHitFxPool)
+        public void Init(IPoolContainer bloodHitFxPool, IPoolContainer environmentHitFxPool)
         {
             _bloodHitFxPool = bloodHitFxPool;
             _environmentHitFxPool = environmentHitFxPool;
@@ -72,12 +72,14 @@ namespace Code.Weapon.BulletPool
 
         private void PlayEnvironmentHitFx()
         {
-            Transform fx = _environmentHitFxPool.Get().transform;
+            var fx = _environmentHitFxPool.Get().transform;
             fx.position = transform.position;
         }
+        
+        private void ActivateTrail()   => _trail.gameObject.SetActive(true);
+        private void DeactivateTrail() => _trail.gameObject.SetActive(false);
 
-        private void PlayBloodHitFx() =>
-            _bloodHitFxPool.Get().SetTransform(transform);
+        private void PlayBloodHitFx() => _bloodHitFxPool.Get().SetTransform(transform);
 
         private void AddForceToRigidbody(Rigidbody rb) => rb.AddForce(
                 transform.forward * _startSpeed * 50, ForceMode.Acceleration);

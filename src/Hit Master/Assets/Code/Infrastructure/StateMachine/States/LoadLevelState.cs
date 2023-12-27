@@ -41,10 +41,7 @@ namespace Code.Infrastructure.StateMachine.States
             _sceneLoader.Load(sceneName, OnLoaded);
         }
 
-        public void Exit()
-        {
-            _curtain.Hide();
-        }
+        public void Exit() => _curtain.Hide();
 
         private void OnLoaded()
         {

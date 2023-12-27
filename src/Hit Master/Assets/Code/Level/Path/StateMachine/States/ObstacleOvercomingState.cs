@@ -39,10 +39,7 @@ namespace Code.Level.Path.StateMachine.States
             _obstacle.Overcame += OnObstacleOvercame;
         }
 
-        public void Exit()
-        {
-            _heroShooting.Disable();
-        }
+        public void Exit() => _heroShooting.Disable();
 
         private void OnObstacleOvercame()
         {

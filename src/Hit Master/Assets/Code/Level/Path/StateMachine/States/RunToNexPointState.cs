@@ -45,10 +45,7 @@ namespace Code.Level.Path.StateMachine.States
             _heroFollower.PointReached += OnPointReached;
         }
 
-        public void Exit()
-        {
-            _heroShooting.Disable();
-        }
+        public void Exit() => _heroShooting.Disable();
 
         private void OnPointReached()
         {
